@@ -445,6 +445,48 @@
     .kpi-card.blue .kpi-value { color: var(--blue); }
     .kpi-card.red .kpi-value { color: var(--red); animation: pulse 2s infinite; }
 
+    /* FINANCE SECTION */
+    .finance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .finance-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .finance-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .finance-title { font-size: 16px; font-weight: 700; }
+    .finance-value { font-size: 28px; font-weight: 800; margin-top: 10px; }
+    .finance-sub { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+    .finance-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .finance-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .finance-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .finance-bar-fill.capex { width: 72%; background: linear-gradient(90deg, var(--blue), var(--accent)); }
+    .finance-bar-fill.opex { width: 58%; background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+
     /* OBRA CARDS */
     .main-grid {
       display: grid;
@@ -883,6 +925,21 @@
       <div class="ai-summary"><div class="ai-summary-left"><div class="ai-summary-header"><h3>🤖 Resumo Diário — IA</h3><span>24 Abr 2026</span></div><div class="ai-summary-text" id="aiSummaryText"></div></div><div class="ai-summary-right"><div class="stats-grid"><div class="stat-item"><div class="value">47</div><div class="label">total msgs</div></div><div class="stat-item"><div class="value">2</div><div class="label">críticos</div></div></div><div class="ai-summary-buttons"><button class="btn btn-primary" id="regenerateBtn">🔄 Gerar</button></div></div></div>
 
       <div class="kpi-grid"><div class="kpi-card blue"><div class="kpi-header"><span>Obras Ativas</span><div class="kpi-icon blue">🏗️</div></div><div class="kpi-value" data-target="3">0</div></div><div class="kpi-card red"><div class="kpi-header"><span>Alertas Críticos</span><div class="kpi-icon red">🚨</div></div><div class="kpi-value" data-target="2">0</div></div></div>
+
+      <div class="finance-grid">
+        <div class="finance-card">
+          <div class="finance-header"><span class="finance-title">CAPEX</span><div class="kpi-icon blue">💼</div></div>
+          <div class="finance-value">R$ 7,4M</div>
+          <div class="finance-sub">Investimento em equipamentos, estruturas e implantação da obra.</div>
+          <div class="finance-progress"><div class="finance-bar"><div class="finance-bar-fill capex"></div></div><span>72% projetado</span></div>
+        </div>
+        <div class="finance-card">
+          <div class="finance-header"><span class="finance-title">OPEX</span><div class="kpi-icon orange">🧾</div></div>
+          <div class="finance-value">R$ 3,3M</div>
+          <div class="finance-sub">Custos operacionais previstos, manutenção e consumíveis até entrega.</div>
+          <div class="finance-progress"><div class="finance-bar"><div class="finance-bar-fill opex"></div></div><span>58% previsto</span></div>
+        </div>
+      </div>
 
       <div class="main-grid"><div class="obras-list"><div class="obra-card red" data-obra="2"><div class="obra-header" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80')"><div class="obra-header-content"><h3>Galpão Industrial Norte</h3><span class="status-badge red">Alerta Crítico</span></div></div><div class="obra-body"><p class="obra-engineer">Eng. Paula Santos</p><div class="obra-meta"><div><div>Início</div><div>Jan 2026</div></div><div><div>Previsão</div><div>Set 2026</div></div><div><div>Orçamento</div><div>R$ 5.1M</div></div></div><div class="obra-progress"><div class="progress-bar-container"><div class="progress-bar"><div class="progress-fill red" style="width: 41%"></div></div></div><div class="circular-progress" style="background: conic-gradient(var(--red) 0% 41%, var(--border) 41% 100%)">41%</div></div><div class="obra-warning">⚠️ Cimento esgotado · Andaime setor C interditado</div></div></div></div><div class="side-panel"><div class="panel-card"><h3>🌤️ Previsão</h3><div class="weather-grid"><div class="weather-item">☀️ 28°C</div><div class="weather-item">⛅ 26°C</div><div class="weather-item">🌧️ 22°C</div></div></div><div class="panel-card"><h3>📦 Entregas</h3><div class="deliveries-list"><div class="delivery-item"><div>🧱 Cimento - Obra 2</div><div>Hoje 16h</div></div></div></div></div></div>
 

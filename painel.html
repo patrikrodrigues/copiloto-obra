@@ -47,7 +47,6 @@
     ::-webkit-scrollbar-track { background: var(--border); }
     ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
 
-    /* SIDEBAR */
     .sidebar {
       position: fixed;
       left: 0;
@@ -114,20 +113,6 @@
       justify-content: center;
       animation: pulse 2s infinite;
     }
-    .nav-btn .tooltip {
-      position: absolute;
-      left: 56px;
-      background: var(--border);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    .nav-btn:hover .tooltip { opacity: 1; }
     .sidebar-bottom {
       display: flex;
       flex-direction: column;
@@ -158,7 +143,6 @@
       border: 2px solid var(--surface);
     }
 
-    /* TOPBAR */
     .topbar {
       position: fixed;
       top: 0;
@@ -177,31 +161,6 @@
     .topbar-left { display: flex; align-items: center; gap: 12px; }
     .topbar-title h1 { font-size: 18px; font-weight: 700; }
     .topbar-title span { font-size: 11px; color: var(--muted); }
-    .topbar-center { flex: 1; max-width: 400px; margin: 0 40px; }
-    .search-box { position: relative; width: 100%; }
-    .search-box input {
-      width: 100%;
-      height: 40px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0 40px 0 16px;
-      color: var(--text);
-      font-size: 13px;
-      outline: none;
-    }
-    .search-box input:focus { border-color: var(--blue); }
-    .search-box .shortcut {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      font-size: 11px;
-      background: var(--surface);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
     .topbar-right { display: flex; align-items: center; gap: 16px; }
     .live-clock { font-size: 13px; color: var(--sub); font-weight: 500; }
     .live-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--green); }
@@ -264,7 +223,6 @@
       border-color: #3b82f6;
     }
 
-    /* MAIN CONTENT */
     .main-content {
       margin-left: 72px;
       padding-top: 64px;
@@ -277,7 +235,6 @@
     }
     .page-section.active { display: block; }
 
-    /* KPI CARDS */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -295,7 +252,6 @@
     .kpi-value { font-size: 38px; font-weight: 900; margin-bottom: 8px; }
     .kpi-value.danger { color: var(--red); }
 
-    /* OBRA CARDS */
     .obra-card {
       background: var(--card2);
       border: 1px solid var(--border);
@@ -356,7 +312,6 @@
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo">🏗️</div>
   <nav class="nav-buttons">
@@ -370,10 +325,8 @@
   </div>
 </aside>
 
-<!-- TOPBAR -->
 <header class="topbar">
   <div class="topbar-left"><span class="topbar-logo">🏗️</span><div class="topbar-title"><h1>Copiloto de Obra</h1><span>Gestão inteligente em tempo real</span></div></div>
-  <div class="topbar-center"><div class="search-box"><input type="text" placeholder="Buscar obra, material, evento..."><span class="shortcut">⌘K</span></div></div>
   <div class="topbar-right">
     <span class="live-clock" id="liveClock"></span>
     <div class="live-indicator"><span class="pulse-dot"></span>Ao Vivo</div>
@@ -384,9 +337,7 @@
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
 <main class="main-content">
-  <!-- DASHBOARD SECTION -->
   <section id="section-dashboard" class="page-section active">
     <div class="alert-banner"><p>🔴 <strong>CRÍTICO</strong> — Obra 2: Cimento esgotado no Bloco B. Impacto: 2 dias de atraso.</p><span>há 23 min</span></div>
     
@@ -429,7 +380,6 @@
     </div>
   </section>
 
-  <!-- ALERTAS SECTION -->
   <section id="section-alertas" class="page-section">
     <div class="obra-card red">
       <h3>🔴 Cimento esgotado - Obra 2</h3>
@@ -437,7 +387,6 @@
     </div>
   </section>
 
-  <!-- CAPEX SECTION -->
   <section id="section-capex" class="page-section">
     <div class="kpi-grid">
       <div class="kpi-card"><div>CAPEX Total</div><div class="kpi-value">R$ 10.7M</div></div>
@@ -458,7 +407,6 @@
     </div>
   </section>
 
-  <!-- OPEX SECTION -->
   <section id="section-opex" class="page-section">
     <div class="kpi-grid">
       <div class="kpi-card"><div>OPEX Mensal</div><div class="kpi-value">R$ 187K</div></div>
@@ -487,7 +435,6 @@
 </footer>
 
 <script>
-  // Live Clock
   function updateClock() {
     const now = new Date();
     const clockEl = document.getElementById('liveClock');
@@ -496,7 +443,6 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // Navigation
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
@@ -509,7 +455,6 @@
     });
   });
 
-  // Leaflet Map
   function initDashboardMap() {
     if (window.dashboardMap) { window.dashboardMap.invalidateSize(); return; }
     const map = L.map('dashboardMap').setView([-28.8, -49.5], 8);
@@ -521,7 +466,6 @@
   }
   initDashboardMap();
 
-  // Style for leaflet popups
   const style = document.createElement('style');
   style.textContent = `.leaflet-popup-content-wrapper { background: #111827 !important; color: white !important; border-radius: 12px !important; border: 1px solid #1a2540 !important; } .leaflet-popup-tip { background: #111827 !important; }`;
   document.head.appendChild(style);

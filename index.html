@@ -51,58 +51,143 @@
     .logo-text { font-size: 18px; font-weight: 800; }
     
     /* Hero */
-    .hero { padding: 120px 0 60px; }
+    .hero { padding: 140px 0 60px; }
     .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
     .hero .highlight { background: linear-gradient(135deg, #3b82f6, #00cfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 18px; color: #94a3b8; margin-bottom: 32px; max-width: 600px; }
     
-    /* Preview do Dashboard (igual ao seu arquivo) */
+    /* Preview do Dashboard - VERSÃO RICA */
     .preview-section {
       background: linear-gradient(135deg, #0a0f1a, #07090f);
       padding: 60px 0;
       border-top: 1px solid rgba(255,255,255,0.05);
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .preview-card {
+    .dashboard-preview {
       background: #0d1117;
       border: 1px solid #1a2540;
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 24px 48px rgba(0,0,0,0.4);
     }
-    .preview-header {
+    .dashboard-header {
       background: #0a0f1a;
-      padding: 16px 20px;
+      padding: 16px 24px;
       border-bottom: 1px solid #1a2540;
       display: flex;
-      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
-    .preview-dot { width: 12px; height: 12px; border-radius: 50%; background: #ef4444; }
-    .preview-dot:nth-child(2) { background: #fbbf24; }
-    .preview-dot:nth-child(3) { background: #22c55e; }
-    .preview-content { padding: 24px; }
-    .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-    .preview-card-small {
+    .dashboard-tabs { display: flex; gap: 4px; background: #111827; border-radius: 12px; padding: 4px; }
+    .dashboard-tab { padding: 6px 16px; border-radius: 8px; font-size: 12px; font-weight: 500; color: #94a3b8; cursor: pointer; }
+    .dashboard-tab.active { background: #3b82f6; color: white; }
+    .dashboard-date { font-size: 12px; color: #475569; }
+    
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 24px;
+      border-bottom: 1px solid #1a2540;
+    }
+    .stat-card {
       background: rgba(255,255,255,0.03);
       border: 1px solid #1a2540;
       border-radius: 16px;
       padding: 16px;
     }
-    .alert-preview {
-      background: rgba(239,68,68,0.1);
-      border-left: 3px solid #ef4444;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin-bottom: 12px;
+    .stat-label { font-size: 12px; color: #94a3b8; margin-bottom: 8px; }
+    .stat-value { font-size: 28px; font-weight: 800; }
+    .stat-value.danger { color: #ef4444; }
+    .stat-value.success { color: #22c55e; }
+    .stat-trend { font-size: 11px; margin-top: 6px; color: #22c55e; }
+    
+    .dashboard-alerts {
+      padding: 0 24px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .ia-preview {
-      background: rgba(59,130,246,0.1);
+    .alert-item {
+      padding: 16px;
       border-radius: 12px;
-      padding: 12px 16px;
-      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .alert-item.critical { background: rgba(239,68,68,0.08); border-left: 3px solid #ef4444; }
+    .alert-item.warning { background: rgba(249,115,22,0.08); border-left: 3px solid #f97316; }
+    .alert-item.info { background: rgba(59,130,246,0.08); border-left: 3px solid #3b82f6; }
+    .alert-icon { font-size: 18px; }
+    .alert-content { flex: 1; }
+    .alert-title { font-weight: 600; margin-bottom: 4px; }
+    .alert-desc { font-size: 12px; color: #94a3b8; }
+    .alert-action { font-size: 12px; color: #3b82f6; cursor: pointer; }
+    
+    .dashboard-obras {
+      padding: 0 24px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .obra-item {
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .obra-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .obra-name { font-weight: 600; }
+    .obra-status { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+    .obra-status.critical { background: rgba(239,68,68,0.2); color: #ef4444; }
+    .obra-status.ok { background: rgba(34,197,94,0.2); color: #22c55e; }
+    .progress-bar { height: 6px; background: #1a2540; border-radius: 3px; overflow: hidden; margin: 12px 0 8px; }
+    .progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3b82f6, #0ea5e9); width: 0%; }
+    .progress-fill.critical { background: linear-gradient(90deg, #ef4444, #f97316); }
+    
+    .dashboard-materiais {
+      padding: 0 24px 24px 24px;
+    }
+    .materiais-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .materiais-table th {
+      text-align: left;
+      padding: 12px 8px;
+      font-size: 11px;
+      color: #475569;
+      border-bottom: 1px solid #1a2540;
+    }
+    .materiais-table td {
+      padding: 12px 8px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .badge-low {
+      background: rgba(239,68,68,0.2);
+      color: #ef4444;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
     }
     
-    /* Features Grid */
+    .ia-message {
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(14,165,233,0.05));
+      border-radius: 12px;
+      padding: 16px;
+      margin: 0 24px 24px 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .ia-icon { width: 40px; height: 40px; background: rgba(59,130,246,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .ia-text { flex: 1; font-size: 13px; color: #94a3b8; }
+    .ia-text strong { color: white; }
+    
+    /* Features, Pricing, etc - mantidos iguais */
     .features { padding: 80px 0; }
     .section-title { text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 16px; }
     .section-sub { text-align: center; color: #94a3b8; margin-bottom: 48px; }
@@ -120,7 +205,6 @@
     .feature-card h3 { font-size: 20px; margin-bottom: 12px; }
     .feature-card p { color: #94a3b8; }
     
-    /* Pricing */
     .pricing { padding: 80px 0; background: #0a0f1a; }
     .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 800px; margin: 0 auto; }
     .pricing-card {
@@ -134,7 +218,6 @@
     .price { font-size: 48px; font-weight: 800; margin: 16px 0; }
     .price small { font-size: 14px; font-weight: 400; }
     
-    /* Testimonials */
     .testimonials { padding: 80px 0; }
     .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .testimonial-card {
@@ -153,7 +236,6 @@
     .testimonial-name { font-weight: 600; }
     .testimonial-role { font-size: 12px; color: #475569; }
     
-    /* CTA Final */
     .cta-final {
       background: linear-gradient(135deg, #0f1f3d, #0a1628);
       text-align: center;
@@ -163,10 +245,7 @@
     .cta-final h2 { font-size: 36px; margin-bottom: 16px; }
     .cta-final p { color: #94a3b8; margin-bottom: 32px; }
     
-    /* Footer */
     .footer { text-align: center; padding: 48px 0; color: #475569; border-top: 1px solid #1a2540; }
-    
-    /* WhatsApp Button */
     .whatsapp-btn {
       position: fixed; bottom: 24px; right: 24px;
       background: #25D366; width: 56px; height: 56px; border-radius: 50%;
@@ -179,13 +258,12 @@
     @media (max-width: 768px) {
       .hero h1 { font-size: 32px; }
       .features-grid, .testimonial-grid, .pricing-grid { grid-template-columns: 1fr; }
-      .preview-grid { grid-template-columns: 1fr; }
+      .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
   <div class="container header-inner">
     <div class="logo">
@@ -193,58 +271,106 @@
       <div class="logo-text">Copiloto.Obra</div>
     </div>
     <div style="display: flex; gap: 16px;">
-      <a href="#precos" class="btn btn-outline" style="padding: 8px 20px;">Preços</a>
+      <a href="#pricing" class="btn btn-outline" style="padding: 8px 20px;">Preços</a>
       <a href="#demo" class="btn btn-primary" style="padding: 8px 20px;">Testar grátis</a>
     </div>
   </div>
 </header>
 
-<!-- Hero -->
 <section class="hero">
   <div class="container">
     <h1>Obra parou por falta de material?<br><span class="highlight">O Copiloto avisa 24h antes</span></h1>
     <p>Monitore grupos de WhatsApp com IA. Receba alertas de material, segurança e prazo antes que virem problema. Reduza atrasos em até 40% no primeiro mês.</p>
-    <div style="display: flex; gap: 16px;">
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
       <a href="#demo" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Testar 30 dias grátis</a>
-      <a href="#preview" class="btn btn-outline"><i class="fas fa-play"></i> Ver como funciona</a>
+      <a href="#preview" class="btn btn-outline"><i class="fas fa-play"></i> Ver demo</a>
     </div>
   </div>
 </section>
 
-<!-- Preview do Dashboard (visualização da ferramenta - igual ao seu estilo) -->
+<!-- PREVIEW DO DASHBOARD - VERSÃO RICA -->
 <section id="preview" class="preview-section">
   <div class="container">
     <div style="text-align: center; margin-bottom: 48px;">
       <h2 style="font-size: 32px; font-weight: 800;">Veja como funciona <span class="highlight">na prática</span></h2>
-      <p style="color: #94a3b8;">Seu painel de controle em tempo real</p>
+      <p style="color: #94a3b8;">Seu painel de controle em tempo real — igual ao que você terá</p>
     </div>
-    <div class="preview-card">
-      <div class="preview-header">
-        <div class="preview-dot"></div>
-        <div class="preview-dot"></div>
-        <div class="preview-dot"></div>
-        <span style="margin-left: 12px; font-size: 12px; color: #475569;">Torre de Controle — Obra 2 (Galpão Industrial)</span>
+
+    <div class="dashboard-preview">
+      <div class="dashboard-header">
+        <div class="dashboard-tabs">
+          <span class="dashboard-tab active">Dashboard</span>
+          <span class="dashboard-tab">Obras</span>
+          <span class="dashboard-tab">Materiais</span>
+          <span class="dashboard-tab">Alertas</span>
+        </div>
+        <div class="dashboard-date"><i class="far fa-calendar-alt"></i> Hoje, 15 de Junho 2026 · 14:32</div>
       </div>
-      <div class="preview-content">
-        <div class="preview-grid">
-          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Obras Ativas</div><div style="font-size: 28px; font-weight: 800;">3</div></div>
-          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Alertas Críticos</div><div style="font-size: 28px; font-weight: 800; color: #ef4444;">2</div></div>
-          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Progresso Médio</div><div style="font-size: 28px; font-weight: 800;">64%</div></div>
+
+      <!-- Stats Cards -->
+      <div class="dashboard-stats">
+        <div class="stat-card"><div class="stat-label"><i class="fas fa-hard-hat"></i> Obras Ativas</div><div class="stat-value">3</div><div class="stat-trend"><i class="fas fa-arrow-up"></i> +1 este mês</div></div>
+        <div class="stat-card"><div class="stat-label"><i class="fas fa-exclamation-triangle"></i> Alertas Críticos</div><div class="stat-value danger">2</div><div class="stat-trend"><i class="fas fa-clock"></i> Pendentes</div></div>
+        <div class="stat-card"><div class="stat-label"><i class="fas fa-box"></i> Materiais Baixos</div><div class="stat-value warning" style="color:#f97316;">5</div><div class="stat-trend"><i class="fas fa-chart-line"></i> +2 vs ontem</div></div>
+        <div class="stat-card"><div class="stat-label"><i class="fas fa-chart-line"></i> Progresso Médio</div><div class="stat-value success">64%</div><div class="stat-trend"><i class="fas fa-arrow-up"></i> +5% esta semana</div></div>
+      </div>
+
+      <!-- Alertas -->
+      <div class="dashboard-alerts">
+        <div class="alert-item critical">
+          <div class="alert-icon"><i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i></div>
+          <div class="alert-content"><div class="alert-title">🔴 CRÍTICO - Cimento esgotado</div><div class="alert-desc">Obra 2 (Galpão Industrial Norte) - Bloco B sem cimento. Impacto: 2 dias de atraso estimado.</div></div>
+          <div class="alert-action">Comprar agora →</div>
         </div>
-        <div class="alert-preview">
-          <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
-          <strong style="margin-left: 8px;">Alerta Crítico</strong>
-          <p style="font-size: 12px; margin-top: 6px;">⚠️ Cimento esgotado no Bloco B. Impacto: 2 dias de atraso.</p>
+        <div class="alert-item warning">
+          <div class="alert-icon"><i class="fas fa-truck" style="color: #f97316;"></i></div>
+          <div class="alert-content"><div class="alert-title">🟡 ATENÇÃO - Andaime pendente</div><div class="alert-desc">Obra 2 - Andaime do setor C não entregue. Previsão anterior: ontem.</div></div>
+          <div class="alert-action">Verificar →</div>
         </div>
-        <div class="alert-preview" style="border-left-color: #f97316;">
-          <i class="fas fa-truck" style="color: #f97316;"></i>
-          <strong style="margin-left: 8px;">Material Pendente</strong>
-          <p style="font-size: 12px; margin-top: 6px;">🧱 Andaime setor C — entrega prevista para amanhã.</p>
+        <div class="alert-item info">
+          <div class="alert-icon"><i class="fas fa-chart-line" style="color: #3b82f6;"></i></div>
+          <div class="alert-content"><div class="alert-title">ℹ️ INFO - Progresso atualizado</div><div class="alert-desc">Obra 1 (Condomínio Atlântico) atingiu 68% de conclusão. 2 semanas à frente do cronograma.</div></div>
+          <div class="alert-action">Ver detalhes →</div>
         </div>
-        <div class="ia-preview">
-          <i class="fas fa-robot" style="color: #22c55e;"></i>
-          <span style="margin-left: 8px; font-size: 13px;"><strong>IA detectou:</strong> "Mestre João pediu 50 sacos de cimento. Compra automática sugerida."</span>
+      </div>
+
+      <!-- Obras em andamento -->
+      <div class="dashboard-obras">
+        <div class="obra-item">
+          <div class="obra-header"><span class="obra-name">🏗️ Galpão Industrial Norte</span><span class="obra-status critical">⚠️ Crítico</span></div>
+          <div class="progress-bar"><div class="progress-fill critical" style="width: 41%;"></div></div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px;"><span>41% concluído</span><span>Previsão: Set/2026</span></div>
         </div>
+        <div class="obra-item">
+          <div class="obra-header"><span class="obra-name">🏢 Condomínio Atlântico</span><span class="obra-status ok">✅ No prazo</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 68%;"></div></div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px;"><span>68% concluído</span><span>Previsão: Dez/2026</span></div>
+        </div>
+        <div class="obra-item">
+          <div class="obra-header"><span class="obra-name">🏘️ Residencial Vila Nova</span><span class="obra-status ok">✅ Adiantada</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px;"><span>85% concluído</span><span>Previsão: Out/2026</span></div>
+        </div>
+      </div>
+
+      <!-- Tabela de materiais -->
+      <div class="dashboard-materiais">
+        <table class="materiais-table">
+          <thead><tr><th>Material</th><th>Obra</th><th>Estoque</th><th>Mínimo</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Cimento CP-II</td><td>Galpão Industrial</td><td>0 sacos</td><td>50 sacos</td><td><span class="badge-low">Crítico</span></td></tr>
+            <tr><td>Andaime</td><td>Galpão Industrial</td><td>50%</td><td>70%</td><td><span class="badge-low">Atenção</span></td></tr>
+            <tr><td>Ferragens</td><td>Condomínio Atlântico</td><td>0.6 ton</td><td>1 ton</td><td><span class="badge-low">Atenção</span></td></tr>
+            <tr><td>Tijolos</td><td>Residencial Vila Nova</td><td>2000 un</td><td>1000 un</td><td><span style="color:#22c55e;">Ok</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mensagem da IA -->
+      <div class="ia-message">
+        <div class="ia-icon"><i class="fas fa-robot"></i></div>
+        <div class="ia-text"><strong>🤖 IA detectou:</strong> "Mestre João pediu 50 sacos de cimento no grupo da Obra 2. Compra automática sugerida. Deseja autorizar?"</div>
+        <div style="display: flex; gap: 8px;"><button class="btn btn-primary" style="padding: 6px 16px; font-size: 12px;">Autorizar</button><button style="background: transparent; border: 1px solid #1a2540; padding: 6px 16px; border-radius: 20px; font-size: 12px;">Ignorar</button></div>
       </div>
     </div>
   </div>
@@ -267,7 +393,7 @@
 </section>
 
 <!-- Pricing -->
-<section id="precos" class="pricing">
+<section id="pricing" class="pricing">
   <div class="container">
     <h2 class="section-title">Planos <span class="highlight">simples e justos</span></h2>
     <p class="section-sub">30 dias grátis. Cancele a qualquer momento.</p>
@@ -312,33 +438,24 @@
   </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
   <div class="container">
     <p>Copiloto.Obra © 2026 — Gestão inteligente de obras com IA</p>
-    <p style="margin-top: 8px;">
-      <a href="#" style="color: #475569; text-decoration: none;">Política de Privacidade</a> | 
-      <a href="#" style="color: #475569; text-decoration: none;">Termos de Uso</a>
-    </p>
+    <p style="margin-top: 8px;"><a href="#" style="color: #475569; text-decoration: none;">Política de Privacidade</a> | <a href="#" style="color: #475569; text-decoration: none;">Termos de Uso</a></p>
   </div>
 </footer>
 
-<!-- WhatsApp Button -->
 <a href="https://wa.me/5548984829654?text=Quero%20testar%20o%20Copiloto.Obra%20por%2030%20dias%20grátis" class="whatsapp-btn" target="_blank">
   <i class="fab fa-whatsapp" style="font-size: 28px; color: white;"></i>
 </a>
 
 <script>
-  // Smooth scroll para os links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        alert('🔧 Em breve você poderá agendar sua demonstração! 📱 Clique no botão verde do WhatsApp para falar diretamente comigo.');
-      }
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      else alert('🔧 Em breve você poderá agendar sua demonstração! 📱 Clique no botão verde do WhatsApp para falar diretamente comigo.');
     });
   });
 </script>

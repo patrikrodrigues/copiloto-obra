@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Copiloto.Obra — IA que monitora sua obra no WhatsApp</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       background: #07090f;
       color: #f1f5f9;
       line-height: 1.5;
       overflow-x: hidden;
     }
-    .f-display { font-family: 'Syne', sans-serif; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     
     /* Botões */
@@ -23,6 +22,7 @@
       display: inline-flex; align-items: center; gap: 8px;
       padding: 14px 32px; border-radius: 40px; font-weight: 600;
       text-decoration: none; transition: all 0.2s ease;
+      border: none; cursor: pointer;
     }
     .btn-primary {
       background: linear-gradient(135deg, #3b82f6, #0ea5e9);
@@ -30,14 +30,14 @@
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.4); }
     .btn-outline {
-      border: 1px solid #1a2540; color: #94a3b8;
+      border: 1px solid #1a2540; color: #94a3b8; background: transparent;
     }
     .btn-outline:hover { border-color: #3b82f6; color: #3b82f6; }
     
     /* Header */
     .header {
       position: fixed; top: 0; left: 0; right: 0;
-      background: rgba(7,9,15,0.9); backdrop-filter: blur(20px);
+      background: rgba(7,9,15,0.95); backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.05);
       padding: 16px 0; z-index: 100;
     }
@@ -48,7 +48,7 @@
       background: linear-gradient(135deg, #3b82f6, #00cfff);
       display: flex; align-items: center; justify-content: center; font-size: 20px;
     }
-    .logo-text { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; }
+    .logo-text { font-size: 18px; font-weight: 800; }
     
     /* Hero */
     .hero { padding: 120px 0 60px; }
@@ -56,7 +56,7 @@
     .hero .highlight { background: linear-gradient(135deg, #3b82f6, #00cfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 18px; color: #94a3b8; margin-bottom: 32px; max-width: 600px; }
     
-    /* Preview do Dashboard */
+    /* Preview do Dashboard (igual ao seu arquivo) */
     .preview-section {
       background: linear-gradient(135deg, #0a0f1a, #07090f);
       padding: 60px 0;
@@ -94,6 +94,12 @@
       padding: 12px 16px;
       border-radius: 12px;
       margin-bottom: 12px;
+    }
+    .ia-preview {
+      background: rgba(59,130,246,0.1);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-top: 12px;
     }
     
     /* Features Grid */
@@ -205,11 +211,11 @@
   </div>
 </section>
 
-<!-- Preview do Dashboard (visualização da ferramenta) -->
+<!-- Preview do Dashboard (visualização da ferramenta - igual ao seu estilo) -->
 <section id="preview" class="preview-section">
   <div class="container">
     <div style="text-align: center; margin-bottom: 48px;">
-      <h2 class="f-display" style="font-size: 32px;">Veja como funciona <span class="highlight">na prática</span></h2>
+      <h2 style="font-size: 32px; font-weight: 800;">Veja como funciona <span class="highlight">na prática</span></h2>
       <p style="color: #94a3b8;">Seu painel de controle em tempo real</p>
     </div>
     <div class="preview-card">
@@ -221,9 +227,9 @@
       </div>
       <div class="preview-content">
         <div class="preview-grid">
-          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Obras Ativas</div><div class="f-display" style="font-size: 28px; font-weight: 800;">3</div></div>
-          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Alertas Críticos</div><div class="f-display" style="font-size: 28px; font-weight: 800; color: #ef4444;">2</div></div>
-          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Progresso Médio</div><div class="f-display" style="font-size: 28px; font-weight: 800;">64%</div></div>
+          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Obras Ativas</div><div style="font-size: 28px; font-weight: 800;">3</div></div>
+          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Alertas Críticos</div><div style="font-size: 28px; font-weight: 800; color: #ef4444;">2</div></div>
+          <div class="preview-card-small"><div style="font-size: 11px; color: #475569;">Progresso Médio</div><div style="font-size: 28px; font-weight: 800;">64%</div></div>
         </div>
         <div class="alert-preview">
           <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
@@ -235,7 +241,7 @@
           <strong style="margin-left: 8px;">Material Pendente</strong>
           <p style="font-size: 12px; margin-top: 6px;">🧱 Andaime setor C — entrega prevista para amanhã.</p>
         </div>
-        <div style="background: rgba(34,197,94,0.1); border-radius: 12px; padding: 12px 16px;">
+        <div class="ia-preview">
           <i class="fas fa-robot" style="color: #22c55e;"></i>
           <span style="margin-left: 8px; font-size: 13px;"><strong>IA detectou:</strong> "Mestre João pediu 50 sacos de cimento. Compra automática sugerida."</span>
         </div>

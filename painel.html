@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copiloto de Obra — Gestão Inteligente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #07090f;
+      color: #f1f5f9;
+      min-width: 1200px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== VARIABLES ===== */
+    :root {
+      --bg: #07090f;
+      --surface: #0d1117;
+      --card: #111827;
+      --card2: #0d1424;
+      --border: #1a2540;
+      --border2: #243050;
+      --blue: #3b82f6;
+      --blue-dark: #1d4ed8;
+      --accent: #0ea5e9;
+      --green: #22c55e;
+      --orange: #f97316;
+      --red: #ef4444;
+      --yellow: #eab308;
+      --purple: #a855f7;
+      --text: #f1f5f9;
+      --sub: #94a3b8;
+      --muted: #475569;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track { background: var(--border); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 72px;
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 0;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .nav-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: var(--sub);
+      font-size: 18px;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--blue);
+    }
+    .nav-btn.active { border-left: 2px solid var(--blue); }
+    .nav-btn .badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 16px;
+      height: 16px;
+      background: var(--red);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+    .nav-btn .tooltip {
+      position: absolute;
+      left: 56px;
+      background: var(--border);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .nav-btn:hover .tooltip { opacity: 1; }
+    .sidebar-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar-sidebar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--purple), #c084fc);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      position: relative;
+    }
+    .avatar-sidebar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 2px solid var(--surface);
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 72px;
+      right: 0;
+      height: 64px;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 99;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-title h1 { font-size: 18px; font-weight: 700; }
+    .topbar-title span { font-size: 11px; color: var(--muted); }
+    .topbar-center { flex: 1; max-width: 400px; margin: 0 40px; }
+    .search-box { position: relative; width: 100%; }
+    .search-box input {
+      width: 100%;
+      height: 40px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0 40px 0 16px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--blue); }
+    .search-box .shortcut {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 11px;
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .live-clock { font-size: 13px; color: var(--sub); font-weight: 500; }
+    .live-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--green); }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+    }
+    .chip {
+      padding: 6px 12px;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--blue);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .bell-btn {
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: var(--sub);
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    .bell-btn:hover { background: var(--card); color: var(--text); }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--purple), #c084fc);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      margin-left: 72px;
+      padding-top: 64px;
+      padding-bottom: 64px;
+      min-height: 100vh;
+    }
+    .page-section {
+      padding: 28px;
+      display: none;
+    }
+    .page-section.active { display: block; }
+
+    /* ALERT BANNER */
+    .alert-banner {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .alert-banner p { font-size: 14px; color: var(--text); }
+    .alert-banner span { font-size: 12px; color: var(--muted); }
+
+    /* FEED */
+    .feed-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+    .feed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .feed-header-left h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .feed-header-left p { font-size: 12px; color: var(--muted); }
+    .filter-chips { display: flex; gap: 8px; }
+    .filter-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .filter-chip.active {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    .live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--green); }
+    .feed-list { display: flex; flex-direction: column; }
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-bar {
+      width: 3px;
+      height: 100%;
+      min-height: 80px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .feed-bar.red { background: var(--red); }
+    .feed-bar.green { background: var(--green); }
+    .feed-bar.orange { background: var(--orange); }
+    .feed-content { flex: 1; }
+    .feed-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .feed-meta .group-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .feed-meta .time { font-size: 11px; color: var(--muted); margin-left: auto; }
+    .feed-sender { font-size: 11px; color: var(--sub); margin-bottom: 6px; }
+    .feed-message { font-size: 13px; font-style: italic; color: #64748b; margin-bottom: 10px; }
+    .feed-classification { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .ia-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .ia-chip.red { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .ia-chip.green { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .ia-chip.orange { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+    .urgency-badge {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .urgency-badge.critico { background: var(--red); color: white; animation: pulse 2s infinite; }
+    .urgency-badge.atencao { background: var(--orange); color: white; }
+    .urgency-badge.info { background: var(--green); color: white; }
+    .feed-summary { font-size: 12px; color: var(--sub); line-height: 1.4; }
+    .feed-action { flex-shrink: 0; align-self: center; }
+    .feed-action a { color: var(--blue); font-size: 12px; text-decoration: none; }
+
+    /* AI SUMMARY */
+    .ai-summary {
+      background: linear-gradient(135deg, #0f1f3d, #0a1628);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 20px;
+      display: flex;
+      gap: 30px;
+    }
+    .ai-summary-left { flex: 0 0 60%; }
+    .ai-summary-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .ai-summary-header h3 { font-size: 14px; font-weight: 700; color: var(--blue); text-transform: uppercase; }
+    .ai-summary-text { font-size: 14px; color: var(--sub); line-height: 1.6; min-height: 80px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-item {
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .stat-item .value { font-size: 24px; font-weight: 800; color: var(--blue); }
+    .stat-item .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: var(--blue-dark); }
+    .btn-ghost { background: transparent; color: var(--sub); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--card2); color: var(--text); }
+    .btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 6px; }
+
+    /* KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .kpi-card.blue::before { background: linear-gradient(90deg, var(--blue), var(--accent)); }
+    .kpi-card.red::before { background: linear-gradient(90deg, var(--red), #f87171); }
+    .kpi-card.orange::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+    .kpi-card.green::before { background: linear-gradient(90deg, var(--green), #4ade80); }
+    .kpi-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .kpi-header span { font-size: 12px; color: var(--sub); font-weight: 500; }
+    .kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .kpi-icon.blue { background: rgba(59, 130, 246, 0.15); }
+    .kpi-value { font-size: 38px; font-weight: 900; margin-bottom: 8px; }
+    .kpi-card.blue .kpi-value { color: var(--blue); }
+    .kpi-card.red .kpi-value { color: var(--red); animation: pulse 2s infinite; }
+
+    /* OBRA CARDS */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 65% 35%;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .obras-list { display: flex; flex-direction: column; gap: 16px; }
+    .obra-card {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+    .obra-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+    }
+    .obra-card.green::before { background: var(--green); }
+    .obra-card.red::before { background: var(--red); animation: pulse 2s infinite; }
+    .obra-card.orange::before { background: var(--orange); }
+    .obra-header {
+      height: 160px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .obra-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(13, 20, 36, 1));
+    }
+    .obra-header-content {
+      position: absolute;
+      bottom: 16px;
+      left: 20px;
+      right: 20px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .obra-header-content h3 { font-size: 16px; font-weight: 700; }
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .status-badge.green { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+    .status-badge.red { background: rgba(239, 68, 68, 0.2); color: var(--red); animation: pulse 2s infinite; }
+    .obra-body { padding: 16px 20px; }
+    .obra-engineer { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+    .obra-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; text-align: center; }
+    .obra-progress { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .progress-bar-container { flex: 1; }
+    .progress-bar { height: 6px; background: var(--border); border-radius: 3px; }
+    .progress-fill { height: 100%; border-radius: 3px; }
+    .progress-fill.green { background: linear-gradient(90deg, var(--green), #4ade80); }
+    .progress-fill.red { background: linear-gradient(90deg, var(--red), #f87171); }
+    .circular-progress {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .obra-warning {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--red);
+    }
+    .obra-chip {
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .obra-chip.orange { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+    .obra-chip.blue { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+    .obra-chip.green { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+
+    /* SIDE PANEL */
+    .side-panel { display: flex; flex-direction: column; gap: 16px; }
+    .panel-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .panel-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .weather-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .weather-item {
+      text-align: center;
+      padding: 12px;
+      background: var(--card2);
+      border-radius: 10px;
+    }
+    .deliveries-list { display: flex; flex-direction: column; gap: 10px; }
+    .delivery-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card2);
+      border-radius: 10px;
+    }
+
+    /* MAP SECTION */
+    .map-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .map-header { margin-bottom: 16px; }
+    .map-header h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .map-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* FULL MAP SECTION */
+    .map-full-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .map-full-header { margin-bottom: 20px; }
+    .map-full-header h2 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .map-legend {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--sub); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .legend-dot.blue { background: var(--blue); }
+    .legend-dot.orange { background: var(--orange); }
+    .legend-dot.green { background: var(--green); }
+    .map-stats { display: flex; gap: 32px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .map-stat { text-align: center; }
+    .map-stat .value { font-size: 24px; font-weight: 800; color: var(--blue); }
+    .map-stat .label { font-size: 11px; color: var(--muted); }
+
+    /* IA BUTTON */
+    .btn-ia {
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(14,165,233,0.2));
+      color: #0ea5e9;
+      border: 1px solid rgba(59,130,246,0.4);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-right: 8px;
+    }
+    .btn-ia:hover {
+      background: rgba(59,130,246,0.3);
+      border-color: #3b82f6;
+      box-shadow: 0 0 12px rgba(59,130,246,0.3);
+    }
+
+    /* IA PANEL */
+    .ia-result-block {
+      background: #111827;
+      border: 1px solid #1a2540;
+      border-radius: 12px;
+      padding: 16px;
+      animation: fadeIn 0.4s ease;
+    }
+    .ia-result-block.success { border-left: 3px solid #22c55e; }
+    .ia-result-block.warning { border-left: 3px solid #f97316; }
+    .ia-result-block.danger { border-left: 3px solid #ef4444; }
+    .ia-result-block.tip { border-left: 3px solid #a855f7; }
+    .ia-block-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .ia-block-header.green { color: #22c55e; }
+    .ia-block-header.orange { color: #f97316; }
+    .ia-block-header.purple { color: #a855f7; }
+    .ia-block-text { font-size: 13px; color: #94a3b8; line-height: 1.7; }
+    .ia-block-text strong { color: #f1f5f9; }
+    .ia-sequence-item {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 13px;
+    }
+    .ia-seq-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.2);
+      color: #3b82f6;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ia-economy-highlight {
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #22c55e;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .ia-probability {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .ia-prob-bar {
+      flex: 1;
+      height: 6px;
+      background: #1a2540;
+      border-radius: 3px;
+    }
+    .ia-prob-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #ef4444, #f97316);
+    }
+    .ia-typing-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #475569;
+      padding: 4px 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* FILES SECTION */
+    .files-header { margin-bottom: 8px; }
+    .files-header h2 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .files-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .file-filters { display: flex; gap: 8px; }
+    .file-filter {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--sub);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .file-filter.active { background: var(--blue); border-color: var(--blue); color: white; }
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      margin-bottom: 24px;
+      cursor: pointer;
+    }
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .file-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .file-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .file-icon { font-size: 28px; }
+    .file-type {
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .file-type.planta { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+    .file-type.orcamento { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+    .file-type.contrato { background: rgba(168, 85, 247, 0.15); color: var(--purple); }
+    .file-name { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+    .file-meta { display: flex; gap: 8px; font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+    .file-actions { display: flex; gap: 8px; }
+    .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--border); }
+
+    /* FOOTER */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 72px;
+      right: 0;
+      height: 48px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      font-size: 12px;
+      color: var(--muted);
+      z-index: 98;
+    }
+
+    /* OTHER SECTIONS (simplified) */
+    .reports-header { display: flex; justify-content: space-between; margin-bottom: 24px; }
+    .reports-header h2 { font-size: 24px; font-weight: 700; }
+    .reports-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .report-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .report-badge.ia { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .team-header { display: flex; justify-content: space-between; margin-bottom: 24px; }
+    .team-header h2 { font-size: 24px; font-weight: 700; }
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .member-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+    .member-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">🏗️</div>
+    <nav class="nav-buttons">
+      <button class="nav-btn active" data-section="dashboard">🏗️<span class="tooltip">Dashboard</span></button>
+      <button class="nav-btn" data-section="relatorios">📊<span class="tooltip">Relatórios</span></button>
+      <button class="nav-btn" data-section="alertas">🔔<span class="badge">2</span><span class="tooltip">Alertas</span></button>
+      <button class="nav-btn" data-section="equipe">👷<span class="tooltip">Equipe</span></button>
+      <button class="nav-btn" data-section="arquivos">📁<span class="tooltip">Arquivos</span></button>
+      <button class="nav-btn" data-section="mapa">🗺️<span class="tooltip">Mapa de Obras</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-btn" data-section="configuracoes">⚙️<span class="tooltip">Configurações</span></button>
+      <div class="avatar-sidebar">CM</div>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left"><span class="topbar-logo">🏗️</span><div class="topbar-title"><h1>Copiloto de Obra</h1><span>Gestão inteligente em tempo real</span></div></div>
+    <div class="topbar-center"><div class="search-box"><input type="text" placeholder="Buscar obra, material, evento..."><span class="shortcut">⌘K</span></div></div>
+    <div class="topbar-right"><span class="live-clock" id="liveClock"></span><div class="live-indicator"><span class="pulse-dot"></span>Ao Vivo</div><span class="chip">3 Obras Ativas</span><button class="bell-btn" id="bellBtn">🔔</button><div class="avatar">CM</div></div>
+  </header>
+
+  <!-- IA PANEL (OVERLAY) -->
+  <div id="ia-panel-overlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; z-index:500; backdrop-filter:blur(4px);" onclick="closeIAPanel()"></div>
+  <div id="ia-panel" style="position:fixed; right:-480px; top:0; bottom:0; width:480px; background:#0d1117; border-left:1px solid #1a2540; z-index:501; transition:right 0.3s ease; display:flex; flex-direction:column; overflow:hidden;">
+    <div style="padding:20px 24px; border-bottom:1px solid #1a2540; display:flex; align-items:center; justify-content:space-between; background:#111827;">
+      <div><h3 id="ia-panel-title" style="font-size:16px; font-weight:700; color:#f1f5f9; margin-bottom:4px;">🤖 Análise IA</h3><p id="ia-panel-subtitle" style="font-size:12px; color:#475569;">Processando arquivo...</p></div>
+      <button onclick="closeIAPanel()" style="width:32px; height:32px; background:transparent; border:none; color:#475569; font-size:20px; cursor:pointer;">×</button>
+    </div>
+    <div id="ia-status-bar" style="padding:12px 24px; background:rgba(59,130,246,0.08); border-bottom:1px solid #1a2540; display:flex; align-items:center; gap:10px;">
+      <div id="ia-status-dot" style="width:8px; height:8px; border-radius:50%; background:#3b82f6; animation:pulse 1.5s infinite;"></div>
+      <span id="ia-status-text" style="color:#94a3b8;">Iniciando análise...</span>
+    </div>
+    <div id="ia-panel-content" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;"></div>
+    <div style="padding:16px 24px; border-top:1px solid #1a2540; background:#111827; display:flex; gap:10px;">
+      <button onclick="closeIAPanel()" style="flex:1; padding:10px; background:transparent; border:1px solid #1a2540; border-radius:8px; color:#94a3b8; font-size:13px; cursor:pointer;">Fechar</button>
+      <button style="flex:2; padding:10px; background:linear-gradient(135deg,#1d4ed8,#3b82f6); border:none; border-radius:8px; color:white; font-size:13px; font-weight:600; cursor:pointer;">📋 Salvar Análise</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- DASHBOARD SECTION -->
+    <section id="section-dashboard" class="page-section active">
+      <div class="alert-banner"><p>🔴 <strong>CRÍTICO</strong> — Obra 2: Cimento esgotado no Bloco B. Impacto: 2 dias de atraso.</p><span>há 23 min</span></div>
+      
+      <div class="feed-section"><div class="feed-header"><div class="feed-header-left"><h2>💬 Feed Inteligente</h2><p>IA monitorando grupos · 47 mensagens hoje</p></div><div class="feed-header-right"><div class="filter-chips"><button class="filter-chip active" data-filter="todos">Todos</button><button class="filter-chip" data-filter="critico">Críticos</button></div><div class="live-badge"><span class="pulse-dot"></span>Ao vivo</div></div></div>
+      <div class="feed-list"><div class="feed-item" data-urgency="critico"><div class="feed-bar red"></div><div class="feed-content"><div class="feed-meta"><span class="group-name">Obra 2 — Galpão Industrial</span><span class="time">14:23</span></div><div class="feed-sender">João Silva (Mestre)</div><div class="feed-message">"acabou o cimento no bloco B, precisa 50 sacos urgente"</div><div class="feed-classification"><span class="ia-chip red">🧱 Falta de Material</span><span class="urgency-badge critico">CRÍTICO</span></div><div class="feed-summary">Material crítico esgotado. Ação imediata necessária.</div></div><div class="feed-action"><a href="#">Ver obra →</a></div></div></div></div>
+
+      <div class="ai-summary"><div class="ai-summary-left"><div class="ai-summary-header"><h3>🤖 Resumo Diário — IA</h3><span>24 Abr 2026</span></div><div class="ai-summary-text" id="aiSummaryText"></div></div><div class="ai-summary-right"><div class="stats-grid"><div class="stat-item"><div class="value">47</div><div class="label">total msgs</div></div><div class="stat-item"><div class="value">2</div><div class="label">críticos</div></div></div><div class="ai-summary-buttons"><button class="btn btn-primary" id="regenerateBtn">🔄 Gerar</button></div></div></div>
+
+      <div class="kpi-grid"><div class="kpi-card blue"><div class="kpi-header"><span>Obras Ativas</span><div class="kpi-icon blue">🏗️</div></div><div class="kpi-value" data-target="3">0</div></div><div class="kpi-card red"><div class="kpi-header"><span>Alertas Críticos</span><div class="kpi-icon red">🚨</div></div><div class="kpi-value" data-target="2">0</div></div></div>
+
+      <div class="main-grid"><div class="obras-list"><div class="obra-card red" data-obra="2"><div class="obra-header" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80')"><div class="obra-header-content"><h3>Galpão Industrial Norte</h3><span class="status-badge red">Alerta Crítico</span></div></div><div class="obra-body"><p class="obra-engineer">Eng. Paula Santos</p><div class="obra-meta"><div><div>Início</div><div>Jan 2026</div></div><div><div>Previsão</div><div>Set 2026</div></div><div><div>Orçamento</div><div>R$ 5.1M</div></div></div><div class="obra-progress"><div class="progress-bar-container"><div class="progress-bar"><div class="progress-fill red" style="width: 41%"></div></div></div><div class="circular-progress" style="background: conic-gradient(var(--red) 0% 41%, var(--border) 41% 100%)">41%</div></div><div class="obra-warning">⚠️ Cimento esgotado · Andaime setor C interditado</div></div></div></div><div class="side-panel"><div class="panel-card"><h3>🌤️ Previsão</h3><div class="weather-grid"><div class="weather-item">☀️ 28°C</div><div class="weather-item">⛅ 26°C</div><div class="weather-item">🌧️ 22°C</div></div></div><div class="panel-card"><h3>📦 Entregas</h3><div class="deliveries-list"><div class="delivery-item"><div>🧱 Cimento - Obra 2</div><div>Hoje 16h</div></div></div></div></div></div>
+
+      <div class="map-section"><div class="map-header"><h3>Mapa de Obras - Região Sul</h3><p>Santa Catarina</p></div><div id="dashboardMap" style="width:100%;height:320px;border-radius:12px;overflow:hidden;border:1px solid #1a2540;"></div><div class="map-footer"><span>Obras em Jacinto Machado, Criciúma e Araranguá</span></div></div>
+    </section>
+
+    <!-- RELATORIOS SECTION -->
+    <section id="section-relatorios" class="page-section"><div class="reports-header"><h2>Relatórios</h2><button class="btn btn-primary">Gerar com IA</button></div><div class="reports-grid"><div class="report-card"><div><h4>Relatório Obra 1</h4><span>68% concluído</span></div><span class="report-badge ia">Gerado IA</span><div class="report-buttons"><button class="btn btn-primary btn-sm">Baixar</button></div></div></div></section>
+
+    <!-- ALERTAS SECTION -->
+    <section id="section-alertas" class="page-section"><div class="reports-header"><h2>Central de Alertas</h2></div><div class="alerts-list"><div class="obra-card red" style="padding:16px"><div>🔴 Cimento esgotado - Obra 2</div><button class="btn btn-success btn-sm" onclick="resolveAlert(this)">Resolver</button></div></div></section>
+
+    <!-- EQUIPE SECTION -->
+    <section id="section-equipe" class="page-section"><div class="team-header"><h2>Equipe</h2><button class="btn btn-primary">+ Membro</button></div><div class="team-grid"><div class="member-card"><div class="member-avatar blue">CM</div><div>Eng. Carlos</div><div>Obra 1</div></div></div></section>
+
+    <!-- ARQUIVOS SECTION -->
+    <section id="section-arquivos" class="page-section">
+      <div class="files-header"><h2>Arquivos e Documentos</h2><p>Plantas, orçamentos, contratos</p></div>
+      <div class="files-top"><div class="file-filters"><button class="file-filter active" data-file-filter="todos">Todos</button><button class="file-filter" data-file-filter="planta">Plantas</button><button class="file-filter" data-file-filter="orcamento">Orçamentos</button></div><button class="btn btn-primary">+ Upload</button></div>
+      <div class="upload-zone" id="uploadZone"><div class="icon">📤</div><h4>Arraste arquivos</h4><button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">Selecionar</button><input type="file" id="fileInput" multiple style="display:none"></div>
+      <div class="files-grid" id="filesGrid">
+        <div class="file-card" data-file-type="planta"><div class="file-card-top"><span class="file-icon">📐</span><span class="file-type planta">Planta</span></div><div class="file-name">Planta Baixa.dwg</div><div class="file-meta"><span>Obra 1</span><span>2.4 MB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div></div>
+        <div class="file-card" data-file-type="orcamento"><div class="file-card-top"><span class="file-icon">💰</span><span class="file-type orcamento">Orçamento</span></div><div class="file-name">Orçamento Revisado.xlsx</div><div class="file-meta"><span>Obra 2</span><span>1.1 MB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div></div>
+        <div class="file-card" data-file-type="contrato"><div class="file-card-top"><span class="file-icon">📄</span><span class="file-type contrato">Contrato</span></div><div class="file-name">Contrato Elétrica.pdf</div><div class="file-meta"><span>Obra 2</span><span>890 KB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div></div>
+      </div>
+    </section>
+
+    <!-- MAPA DE OBRAS SECTION (FULL MAP) -->
+    <section id="section-mapa" class="page-section">
+      <div class="map-full-section">
+        <div class="map-full-header">
+          <h2>🗺️ Mapa de Obras - Santa Catarina</h2>
+        </div>
+        <div class="map-legend">
+          <div class="legend-item"><span class="legend-dot blue"></span><span>Obra 1 - Condomínio Atlântico (Jacinto Machado)</span></div>
+          <div class="legend-item"><span class="legend-dot orange"></span><span>Obra 2 - Galpão Industrial Norte (Criciúma)</span></div>
+          <div class="legend-item"><span class="legend-dot green"></span><span>Obra 3 - Residencial Vila Nova (Araranguá)</span></div>
+        </div>
+        <div id="fullMap" style="width:100%;height:450px;border-radius:16px;overflow:hidden;border:1px solid #1a2540;"></div>
+        <div class="map-stats">
+          <div class="map-stat"><div class="value">3</div><div class="label">Obras ativas</div></div>
+          <div class="map-stat"><div class="value">3</div><div class="label">Municípios</div></div>
+          <div class="map-stat"><div class="value">R$ 10.7M</div><div class="label">Investimento total</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIGURAÇÕES SECTION -->
+    <section id="section-configuracoes" class="page-section"><div class="reports-header"><h2>Configurações</h2></div><div class="settings-card"><h3>Notificações</h3><div class="setting-item"><span>Alertas WhatsApp</span><div class="toggle on"></div></div></div></section>
+  </main>
+
+  <footer class="footer"><div>Copiloto de Obra © 2026</div><div class="footer-center">🔄 última sincronização: há 2 min</div><div class="footer-right"><span class="pulse-dot"></span>Sistemas operacionais</div></footer>
+
+  <script>
+    // IA Analysis Data
+    const iaAnalysisData = {
+      orcamento: {
+        title: "Análise de Orçamento",
+        subtitle: "Comparando com preços de mercado",
+        steps: ["Lendo planilha de custos...", "Comparando preços com índice regional...", "Identificando desvios...", "Gerando recomendações..."],
+        blocks: [{type:"success",headerColor:"green",icon:"✅",label:"CONCRETO",text:"Preço dentro do esperado."},{type:"warning",headerColor:"orange",icon:"⚠️",label:"CIMENTO",text:"R$42/saco vs R$38 mercado.",highlight:"💰 Economia potencial: R$800"}]
+      },
+      planta: {
+        title: "Análise de Planta",
+        subtitle: "Verificando conformidade",
+        steps: ["Processando arquivo...", "Identificando áreas...", "Verificando NBR..."],
+        blocks: [{type:"success",headerColor:"green",icon:"📐",label:"DADOS",text:"Área total: 1.240m²"},{type:"danger",headerColor:"red",icon:"⚠️",label:"NBR 9050",text:"Escada com largura 0,90m. Mínimo 1,20m."}]
+      },
+      contrato: {
+        title: "Análise Contratual",
+        subtitle: "Verificando cláusulas",
+        steps: ["Lendo PDF...", "Analisando riscos..."],
+        blocks: [{type:"warning",headerColor:"orange",icon:"⚠️",label:"MULTA",text:"0,5% ao dia sobre valor total."}]
+      }
+    };
+
+    function analyzeFile(btn) {
+      const card = btn.closest('.file-card');
+      const fileName = card.querySelector('.file-name').textContent;
+      let fileType = 'contrato';
+      const typeElem = card.querySelector('.file-type');
+      if(typeElem) {
+        if(typeElem.classList.contains('orcamento')) fileType = 'orcamento';
+        else if(typeElem.classList.contains('planta')) fileType = 'planta';
+      }
+      const data = iaAnalysisData[fileType] || iaAnalysisData.contrato;
+      
+      document.getElementById('ia-panel-title').textContent = '🤖 ' + data.title;
+      document.getElementById('ia-panel-subtitle').textContent = fileName;
+      document.getElementById('ia-status-text').textContent = 'Iniciando análise...';
+      document.getElementById('ia-panel-content').innerHTML = '';
+      document.getElementById('ia-panel-overlay').style.display = 'block';
+      document.getElementById('ia-panel').style.right = '0';
+      
+      let stepIndex = 0;
+      const content = document.getElementById('ia-panel-content');
+      const statusText = document.getElementById('ia-status-text');
+      const interval = setInterval(() => {
+        if(stepIndex < data.steps.length) {
+          statusText.textContent = data.steps[stepIndex];
+          const line = document.createElement('div');
+          line.className = 'ia-typing-line';
+          line.innerHTML = `<span>⟳</span><span>${data.steps[stepIndex]}</span>`;
+          content.appendChild(line);
+          content.scrollTop = content.scrollHeight;
+          stepIndex++;
+        } else {
+          clearInterval(interval);
+          statusText.textContent = 'Análise concluída';
+          document.getElementById('ia-status-dot').style.background = '#22c55e';
+          content.innerHTML = '';
+          data.blocks.forEach((block, i) => {
+            setTimeout(() => {
+              const div = document.createElement('div');
+              div.className = `ia-result-block ${block.type}`;
+              let html = `<div class="ia-block-header ${block.headerColor}">${block.icon} ${block.label}</div><div class="ia-block-text">${block.text}</div>`;
+              if(block.highlight) html += `<div class="ia-economy-highlight">${block.highlight}</div>`;
+              div.innerHTML = html;
+              content.appendChild(div);
+              content.scrollTop = content.scrollHeight;
+            }, i * 200);
+          });
+        }
+      }, 500);
+    }
+
+    function closeIAPanel() {
+      document.getElementById('ia-panel').style.right = '-480px';
+      document.getElementById('ia-panel-overlay').style.display = 'none';
+    }
+
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('liveClock').textContent = now.toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Navigation
+    document.querySelectorAll('[data-section]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('section-' + btn.dataset.section).classList.add('active');
+        document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Re-initialize full map when mapa section becomes active
+        if(btn.dataset.section === 'mapa') {
+          setTimeout(() => {
+            if(window.fullMap) {
+              window.fullMap.invalidateSize();
+            } else {
+              initFullMap();
+            }
+          }, 100);
+        }
+      });
+    });
+
+    // KPI Counter Animation
+    document.querySelectorAll('.kpi-value[data-target]').forEach(el => {
+      let target = parseInt(el.dataset.target);
+      let current = 0;
+      let increment = target / 30;
+      let timer = setInterval(() => {
+        current += increment;
+        if(current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current);
+      }, 50);
+    });
+
+    // AI Summary Typewriter
+    const summaryText = "3 obras monitoradas. 47 mensagens nos grupos. 2 alertas críticos: falta de cimento na Obra 2 e risco no andaime. Ação prioritária: resolver cimento hoje.";
+    let i = 0;
+    function typeWriter() {
+      const el = document.getElementById('aiSummaryText');
+      if(i < summaryText.length) {
+        el.textContent += summaryText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 30);
+      }
+    }
+    typeWriter();
+    document.getElementById('regenerateBtn')?.addEventListener('click', () => { i = 0; document.getElementById('aiSummaryText').textContent = ''; typeWriter(); });
+
+    // File upload handling
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const filesGrid = document.getElementById('filesGrid');
+    
+    function handleFiles(files) {
+      Array.from(files).forEach(file => {
+        let type = 'contrato', icon = '📄';
+        const ext = file.name.split('.').pop().toLowerCase();
+        if(['dwg'].includes(ext)) { type = 'planta'; icon = '📐'; }
+        else if(['xls','xlsx'].includes(ext)) { type = 'orcamento'; icon = '💰'; }
+        const card = document.createElement('div');
+        card.className = 'file-card';
+        card.dataset.fileType = type;
+        card.innerHTML = `<div class="file-card-top"><span class="file-icon">${icon}</span><span class="file-type ${type}">${type.charAt(0).toUpperCase()+type.slice(1)}</span></div><div class="file-name">${file.name}</div><div class="file-meta"><span>Novo</span><span>${(file.size/1024/1024).toFixed(1)} MB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div>`;
+        filesGrid.insertBefore(card, filesGrid.firstChild);
+      });
+    }
+    uploadZone?.addEventListener('click', () => fileInput?.click());
+    fileInput?.addEventListener('change', e => handleFiles(e.target.files));
+    uploadZone?.addEventListener('dragover', e => e.preventDefault());
+    uploadZone?.addEventListener('drop', e => { e.preventDefault(); handleFiles(e.dataTransfer.files); });
+
+    window.resolveAlert = function(btn) { btn.closest('.obra-card')?.remove(); };
+
+    // Leaflet Map Configuration
+    function makeIcon(color) {
+      return L.divIcon({
+        html: `<div style="width:32px;height:32px;background:${color};border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 0 12px ${color}88;"></div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      });
+    }
+
+    const obrasMap = [
+      { lat: -28.9954, lng: -49.7625, color: '#3b82f6', name: 'Obra 1 - Condomínio Atlântico', cidade: 'Jacinto Machado, SC', status: 'No Prazo', progresso: '68%', eng: 'Eng. Carlos Mendes' },
+      { lat: -28.6802, lng: -49.3700, color: '#ef4444', name: 'Obra 2 - Galpão Industrial Norte', cidade: 'Criciúma, SC', status: 'Em Risco', progresso: '41%', eng: 'Eng. Paula Rocha' },
+      { lat: -28.9350, lng: -49.4870, color: '#22c55e', name: 'Obra 3 - Residencial Vila Nova', cidade: 'Araranguá, SC', status: 'Adiantada', progresso: '85%', eng: 'Eng. Ricardo Lima' }
+    ];
+
+    function createPopupContent(obra) {
+      return `<div style="background:#111827;border:1px solid #1a2540;border-radius:12px;padding:16px;min-width:200px;"><div style="font-weight:700;margin-bottom:6px;">${obra.name}</div><div style="color:#94a3b8;font-size:12px;margin-bottom:10px;">${obra.cidade}</div><div><div>Status: ${obra.status}</div><div>Progresso: <span style="color:${obra.color}">${obra.progresso}</span></div><div>Eng: ${obra.eng}</div></div></div>`;
+    }
+
+    function initDashboardMap() {
+      const map = L.map('dashboardMap').setView([-28.8, -49.5], 8);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(map);
+      obrasMap.forEach(obra => {
+        L.marker([obra.lat, obra.lng], { icon: makeIcon(obra.color) }).addTo(map).bindPopup(createPopupContent(obra));
+      });
+      return map;
+    }
+
+    function initFullMap() {
+      if(window.fullMap) return window.fullMap;
+      const map = L.map('fullMap').setView([-28.8, -49.5], 9);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(map);
+      obrasMap.forEach(obra => {
+        L.marker([obra.lat, obra.lng], { icon: makeIcon(obra.color) }).addTo(map).bindPopup(createPopupContent(obra));
+      });
+      window.fullMap = map;
+      return map;
+    }
+
+    // Initialize dashboard map
+    initDashboardMap();
+    
+    // Initialize full map when needed (lazy load)
+    window.initFullMap = initFullMap;
+    
+    // Style for leaflet popups
+    const style = document.createElement('style');
+    style.textContent = `.leaflet-popup-content-wrapper { background: transparent !important; box-shadow: none !important; } .leaflet-popup-tip { background: #111827 !important; }`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

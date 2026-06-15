@@ -19,7 +19,6 @@
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     
-    /* Botões */
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 14px 32px; border-radius: 40px; font-weight: 600;
@@ -36,7 +35,6 @@
     }
     .btn-outline:hover { border-color: #3b82f6; color: #3b82f6; }
     
-    /* Header */
     .header {
       position: fixed; top: 0; left: 0; right: 0;
       background: rgba(7,9,15,0.95); backdrop-filter: blur(20px);
@@ -51,83 +49,53 @@
       display: flex; align-items: center; justify-content: center; font-size: 20px;
     }
     .logo-text { font-size: 18px; font-weight: 800; }
-    .header-nav { display: flex; gap: 8px; }
-    .tab-btn {
-      padding: 10px 18px; border-radius: 999px; border: 1px solid transparent;
-      background: transparent; color: #94a3b8; font-weight: 600; cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .tab-btn.active {
-      background: rgba(59,130,246,0.15); color: #3b82f6; border-color: rgba(59,130,246,0.25);
-    }
-    .tab-btn:hover { background: rgba(59,130,246,0.08); color: #3b82f6; }
+    .tab-switch { display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 40px; }
+    .tab-btn { padding: 8px 20px; border-radius: 32px; background: transparent; border: none; color: #94a3b8; font-weight: 600; cursor: pointer; }
+    .tab-btn.active { background: #3b82f6; color: white; }
     
-    /* Hero */
     .hero { padding: 140px 0 60px; }
     .hero h1 { font-size: 52px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
-    .hero .highlight { background: linear-gradient(135deg, #3b82f6, #00cfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .highlight { background: linear-gradient(135deg, #3b82f6, #00cfff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 18px; color: #94a3b8; margin-bottom: 32px; max-width: 600px; }
     
-    /* Features */
     .features { padding: 80px 0; }
     .section-title { text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 16px; }
     .section-sub { text-align: center; color: #94a3b8; margin-bottom: 48px; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
     .feature-card {
-      background: #0d1117;
-      border: 1px solid #1a2540;
-      border-radius: 20px;
-      padding: 32px;
-      text-align: center;
-      transition: all 0.3s;
+      background: #0d1117; border: 1px solid #1a2540; border-radius: 20px;
+      padding: 32px; text-align: center; transition: all 0.3s;
     }
     .feature-card:hover { transform: translateY(-4px); border-color: #3b82f6; }
     .feature-icon { font-size: 48px; color: #3b82f6; margin-bottom: 20px; }
     .feature-card h3 { font-size: 20px; margin-bottom: 12px; }
     .feature-card p { color: #94a3b8; }
     
-    /* Pricing */
     .pricing { padding: 80px 0; background: #0a0f1a; }
     .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 800px; margin: 0 auto; }
     .pricing-card {
-      background: #0d1117;
-      border: 1px solid #1a2540;
-      border-radius: 24px;
-      padding: 32px;
-      text-align: center;
+      background: #0d1117; border: 1px solid #1a2540; border-radius: 24px;
+      padding: 32px; text-align: center;
     }
     .pricing-card.featured { border-color: #3b82f6; background: linear-gradient(135deg, #0f1f3d, #0a1628); }
     .price { font-size: 48px; font-weight: 800; margin: 16px 0; }
     
-    /* Testimonials */
-    .testimonials { padding: 80px 0; }
-    .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 80px 0; }
     .testimonial-card {
-      background: #0d1117;
-      border: 1px solid #1a2540;
-      border-radius: 20px;
-      padding: 24px;
+      background: #0d1117; border: 1px solid #1a2540; border-radius: 20px; padding: 24px;
     }
     .testimonial-avatar {
       width: 48px; height: 48px; border-radius: 50%;
       background: linear-gradient(135deg, #3b82f6, #00cfff);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 16px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-weight: 700;
     }
     .testimonial-text { font-style: italic; color: #94a3b8; margin-bottom: 16px; }
-    .testimonial-name { font-weight: 600; }
-    
-    /* CTA */
     .cta-final {
       background: linear-gradient(135deg, #0f1f3d, #0a1628);
-      text-align: center;
-      padding: 80px 0;
-      border-top: 1px solid rgba(59,130,246,0.2);
+      text-align: center; padding: 80px 0;
     }
     .cta-final h2 { font-size: 36px; margin-bottom: 16px; }
     .cta-final p { color: #94a3b8; margin-bottom: 32px; }
-    
-    /* Footer */
     .footer { text-align: center; padding: 48px 0; color: #475569; border-top: 1px solid #1a2540; }
     .whatsapp-btn {
       position: fixed; bottom: 24px; right: 24px;
@@ -138,7 +106,7 @@
     }
     .whatsapp-btn:hover { transform: scale(1.1); }
     
-    /* ===== DASHBOARD STYLES (do seu arquivo) ===== */
+    /* Dashboard Styles */
     .sidebar {
       position: fixed; left: 0; top: 0; width: 72px; height: 100vh;
       background: #0d1117; border-right: 1px solid #1a2540;
@@ -170,38 +138,42 @@
       padding: 22px; position: relative; overflow: hidden;
     }
     .kpi-value { font-size: 38px; font-weight: 900; margin-bottom: 8px; }
+    .kpi-value.danger { color: #ef4444; }
     .obra-card {
       background: #0d1424; border: 1px solid #1a2540; border-radius: 14px;
-      overflow: hidden; position: relative; margin-bottom: 16px;
+      overflow: hidden; position: relative; margin-bottom: 16px; padding: 20px;
     }
-    .obra-card.red::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #ef4444; animation: pulse 2s infinite; }
-    .progress-bar { height: 6px; background: #1a2540; border-radius: 3px; overflow: hidden; }
-    .progress-fill { height: 100%; border-radius: 3px; }
+    .obra-card.red { border-left: 3px solid #ef4444; }
+    .progress-bar { height: 6px; background: #1a2540; border-radius: 3px; overflow: hidden; margin: 12px 0; }
+    .progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3b82f6, #0ea5e9); width: 0%; }
     .progress-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
-    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+    .alert-banner {
+      background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .map-section { background: #0d1117; border: 1px solid #1a2540; border-radius: 16px; padding: 20px; margin-top: 20px; }
+    #dashboardMap { width: 100%; height: 320px; border-radius: 12px; overflow: hidden; border: 1px solid #1a2540; }
+    
     @media (max-width: 768px) {
       .hero h1 { font-size: 32px; }
       .features-grid, .testimonial-grid, .pricing-grid, .kpi-grid { grid-template-columns: 1fr; }
       .sidebar { transform: translateX(-100%); }
-      .sidebar.open { transform: translateX(0); }
       .main-content, .topbar { margin-left: 0; }
     }
   </style>
 </head>
 <body>
 
-<!-- ==================== LANDING PAGE ==================== -->
+<!-- LANDING PAGE -->
 <div id="landing-page">
   <header class="header">
     <div class="container header-inner">
       <div class="logo"><div class="logo-icon">🏗️</div><div class="logo-text">Copiloto.Obra</div></div>
-      <div style="display: flex; gap: 16px; align-items: center;">
-        <div class="header-nav">
-          <button id="landing-tab" class="tab-btn active" onclick="showLanding();">Landing</button>
-          <button id="dashboard-tab" class="tab-btn" onclick="showDashboard();">Aplicativo</button>
-        </div>
-        <a href="#pricing" class="btn btn-outline" style="padding: 8px 20px;">Preços</a>
-        <a href="#" class="btn btn-primary" style="padding: 8px 20px;" onclick="showDashboard();return false;">Acessar Demo</a>
+      <div class="tab-switch">
+        <button class="tab-btn active" onclick="showLanding()">Landing</button>
+        <button class="tab-btn" onclick="showDashboard()">Aplicativo</button>
       </div>
     </div>
   </header>
@@ -211,381 +183,99 @@
       <h1>Obra parou por falta de material?<br><span class="highlight">O Copiloto avisa 24h antes</span></h1>
       <p>Monitore grupos de WhatsApp com IA. Receba alertas de material, segurança e prazo antes que virem problema. Reduza atrasos em até 40% no primeiro mês.</p>
       <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="#" class="btn btn-primary" onclick="showDashboard();return false;"><i class="fas fa-calendar-check"></i> Testar 30 dias grátis</a>
-        <a href="#" class="btn btn-outline" onclick="showDashboard();return false;"><i class="fas fa-play"></i> Ver demo</a>
+        <button class="btn btn-primary" onclick="showDashboard()"><i class="fas fa-calendar-check"></i> Testar 30 dias grátis</button>
+        <button class="btn btn-outline" onclick="showDashboard()"><i class="fas fa-play"></i> Ver demo</button>
       </div>
     </div>
   </section>
 
-  <section class="features">
-    <div class="container">
-      <h2 class="section-title">Tudo que você precisa <span class="highlight">em um só lugar</span></h2>
-      <p class="section-sub">Monitoramento inteligente que transforma o caos do WhatsApp em gestão profissional</p>
-      <div class="features-grid">
-        <div class="feature-card"><div class="feature-icon"><i class="fas fa-robot"></i></div><h3>IA 24h por dia</h3><p>Monitora grupos de WhatsApp automaticamente. Identifica pedidos de material, riscos e atrasos em tempo real.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3>Torre de Controle</h3><p>Visão estratégica do engenheiro: alertas, riscos, cronograma e indicadores de todas as obras.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="fas fa-clipboard-list"></i></div><h3>Central de Batalha</h3><p>Visão do mestre de obra: tarefas do dia, materiais pendentes, prioridades e prazos.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-pie"></i></div><h3>CAPEX e OPEX</h3><p>Análise financeira completa. Compare investimento vs realizado, custos operacionais por obra.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Alertas Proativos</h3><p>Receba notificações antes que falte material. Evite paradas e multas por atraso.</p></div>
-        <div class="feature-card"><div class="feature-icon"><i class="fas fa-file-alt"></i></div><h3>Relatórios Automáticos</h3><p>Resumo diário e relatórios semanais gerados por IA. Professionalize sua gestão.</p></div>
-      </div>
-    </div>
-  </section>
+  <div class="container"><div class="features-grid">
+    <div class="feature-card"><div class="feature-icon"><i class="fas fa-robot"></i></div><h3>IA 24h por dia</h3><p>Monitora grupos de WhatsApp automaticamente.</p></div>
+    <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3>Torre de Controle</h3><p>Visão estratégica do engenheiro.</p></div>
+    <div class="feature-card"><div class="feature-icon"><i class="fas fa-clipboard-list"></i></div><h3>Central de Batalha</h3><p>Visão do mestre de obra.</p></div>
+    <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-pie"></i></div><h3>CAPEX e OPEX</h3><p>Análise financeira completa.</p></div>
+    <div class="feature-card"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Alertas Proativos</h3><p>Evite paradas e multas por atraso.</p></div>
+    <div class="feature-card"><div class="feature-icon"><i class="fas fa-file-alt"></i></div><h3>Relatórios Automáticos</h3><p>Resumos gerados por IA.</p></div>
+  </div></div>
 
-  <section id="pricing" class="pricing">
+  <section class="pricing">
     <div class="container">
       <h2 class="section-title">Planos <span class="highlight">simples e justos</span></h2>
       <p class="section-sub">30 dias grátis. Cancele a qualquer momento.</p>
       <div class="pricing-grid">
-        <div class="pricing-card"><i class="fas fa-hard-hat" style="font-size: 32px; color: #3b82f6;"></i><h3 style="margin-top: 12px;">Básico</h3><div class="price">R$ 497<small>/mês</small></div><p>Até 2 obras simultâneas</p><a href="#" class="btn btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;" onclick="showDashboard();return false;">Começar grátis</a></div>
-        <div class="pricing-card featured"><i class="fas fa-trophy" style="font-size: 32px; color: #fbbf24;"></i><h3 style="margin-top: 12px;">Profissional</h3><div class="price">R$ 997<small>/mês</small></div><p>Até 5 obras simultâneas + relatórios avançados + CAPEX/OPEX</p><a href="#" class="btn btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;" onclick="showDashboard();return false;">Começar grátis</a></div>
+        <div class="pricing-card"><i class="fas fa-hard-hat" style="font-size:32px;color:#3b82f6;"></i><h3 style="margin-top:12px;">Básico</h3><div class="price">R$ 497<small>/mês</small></div><p>Até 2 obras simultâneas</p><button class="btn btn-primary" style="margin-top:24px;width:100%;justify-content:center;" onclick="showDashboard()">Começar grátis</button></div>
+        <div class="pricing-card featured"><i class="fas fa-trophy" style="font-size:32px;color:#fbbf24;"></i><h3 style="margin-top:12px;">Profissional</h3><div class="price">R$ 997<small>/mês</small></div><p>Até 5 obras + CAPEX/OPEX</p><button class="btn btn-primary" style="margin-top:24px;width:100%;justify-content:center;" onclick="showDashboard()">Começar grátis</button></div>
       </div>
     </div>
   </section>
 
-  <section class="testimonials">
-    <div class="container">
-      <h2 class="section-title">Quem já está <span class="highlight">usando</span></h2>
-      <p class="section-sub">Engenheiros e construtoras que já transformaram sua gestão</p>
-      <div class="testimonial-grid">
-        <div class="testimonial-card"><div class="testimonial-avatar">R</div><p class="testimonial-text">"Reduzimos atrasos en 35% no primeiro mês. Hoje não começo uma obra sem o Copiloto."</p><div class="testimonial-name">Eng. Rodrigo</div></div>
-        <div class="testimonial-card"><div class="testimonial-avatar">P</div><p class="testimonial-text">"O que antes eu perdia 2 horas lendo zap, agora vejo em 5 minutos no painel. Recomendo."</p><div class="testimonial-name">Eng. Paula</div></div>
-        <div class="testimonial-card"><div class="testimonial-avatar">C</div><p class="testimonial-text">"A IA avisou da falta de cimento 24h antes. Obra não parou. Economia real."</p><div class="testimonial-name">Mestre Carlos</div></div>
-      </div>
-    </div>
-  </section>
+  <div class="container"><div class="testimonial-grid">
+    <div class="testimonial-card"><div class="testimonial-avatar">R</div><p class="testimonial-text">"Reduzimos atrasos em 35% no primeiro mês. Hoje não começo uma obra sem o Copiloto."</p><strong>Eng. Rodrigo</strong></div>
+    <div class="testimonial-card"><div class="testimonial-avatar">P</div><p class="testimonial-text">"O que antes eu perdia 2 horas lendo zap, agora vejo em 5 minutos no painel."</p><strong>Eng. Paula</strong></div>
+    <div class="testimonial-card"><div class="testimonial-avatar">C</div><p class="testimonial-text">"A IA avisou da falta de cimento 24h antes. Obra não parou."</p><strong>Mestre Carlos</strong></div>
+  </div></div>
 
   <section class="cta-final">
     <div class="container">
       <h2>Pronto para parar de apagar incêndio na obra?</h2>
       <p>Milhares de engenheiros já estão usando. Seu 30 dias grátis começa agora.</p>
-      <a href="#" class="btn btn-primary" style="padding: 14px 32px;" onclick="showDashboard();return false;"><i class="fas fa-calendar-check"></i> Quero meus 30 dias grátis</a>
+      <button class="btn btn-primary" onclick="showDashboard()"><i class="fas fa-calendar-check"></i> Quero meus 30 dias grátis</button>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <p>Copiloto.Obra © 2026 — Gestão inteligente de obras com IA</p>
-      <p style="margin-top: 8px;"><a href="#" style="color: #475569; text-decoration: none;">Política de Privacidade</a> | <a href="#" style="color: #475569; text-decoration: none;">Termos de Uso</a></p>
-    </div>
-  </footer>
+  <footer class="footer"><div class="container"><p>Copiloto.Obra © 2026 — Gestão inteligente de obras com IA</p><p style="margin-top:8px;"><a href="#" style="color:#475569;">Política de Privacidade</a> | <a href="#" style="color:#475569;">Termos de Uso</a></p></div></footer>
 </div>
 
-<!-- ==================== DASHBOARD (seu arquivo completo) ==================== -->
-<div id="dashboard-app" style="display: none;">
-  <!-- IA PANEL (OVERLAY) -->
-  <div id="ia-panel-overlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; z-index:500; backdrop-filter:blur(4px);" onclick="closeIAPanel()"></div>
-  <div id="ia-panel" style="position:fixed; right:-480px; top:0; bottom:0; width:480px; background:#0d1117; border-left:1px solid #1a2540; z-index:501; transition:right 0.3s ease; display:flex; flex-direction:column; overflow:hidden;">
-    <div style="padding:20px 24px; border-bottom:1px solid #1a2540; display:flex; align-items:center; justify-content:space-between; background:#111827;">
-      <div><h3 id="ia-panel-title" style="font-size:16px; font-weight:700; color:#f1f5f9; margin-bottom:4px;">🤖 Análise IA</h3><p id="ia-panel-subtitle" style="font-size:12px; color:#475569;">Processando arquivo...</p></div>
-      <button onclick="closeIAPanel()" style="width:32px; height:32px; background:transparent; border:none; color:#475569; font-size:20px; cursor:pointer;">×</button>
-    </div>
-    <div id="ia-status-bar" style="padding:12px 24px; background:rgba(59,130,246,0.08); border-bottom:1px solid #1a2540; display:flex; align-items:center; gap:10px;">
-      <div id="ia-status-dot" style="width:8px; height:8px; border-radius:50%; background:#3b82f6; animation:pulse 1.5s infinite;"></div>
-      <span id="ia-status-text" style="color:#94a3b8;">Iniciando análise...</span>
-    </div>
-    <div id="ia-panel-content" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;"></div>
-    <div style="padding:16px 24px; border-top:1px solid #1a2540; background:#111827; display:flex; gap:10px;">
-      <button onclick="closeIAPanel()" style="flex:1; padding:10px; background:transparent; border:1px solid #1a2540; border-radius:8px; color:#94a3b8; font-size:13px; cursor:pointer;">Fechar</button>
-      <button style="flex:2; padding:10px; background:linear-gradient(135deg,#1d4ed8,#3b82f6); border:none; border-radius:8px; color:white; font-size:13px; font-weight:600; cursor:pointer;">📋 Salvar Análise</button>
-    </div>
-  </div>
-
+<!-- DASHBOARD -->
+<div id="dashboard-app" style="display:none;">
   <aside class="sidebar">
     <div class="sidebar-logo">🏗️</div>
-    <nav class="nav-buttons">
-      <button class="nav-btn active" data-section="dashboard">🏗️<span class="tooltip">Dashboard</span></button>
-      <button class="nav-btn" data-section="relatorios">📊<span class="tooltip">Relatórios</span></button>
-      <button class="nav-btn" data-section="alertas">🔔<span class="badge">2</span><span class="tooltip">Alertas</span></button>
-      <button class="nav-btn" data-section="equipe">👷<span class="tooltip">Equipe</span></button>
-      <button class="nav-btn" data-section="arquivos">📁<span class="tooltip">Arquivos</span></button>
-      <button class="nav-btn" data-section="mapa">🗺️<span class="tooltip">Mapa de Obras</span></button>
-    </nav>
-    <div class="sidebar-bottom">
-      <button class="nav-btn" data-section="configuracoes">⚙️<span class="tooltip">Configurações</span></button>
-      <div class="avatar-sidebar">CM</div>
-    </div>
+    <button class="nav-btn active" data-section="dashboard">🏗️</button>
+    <button class="nav-btn" data-section="alertas">🔔</button>
   </aside>
 
   <header class="topbar">
     <div class="topbar-left"><span class="topbar-logo">🏗️</span><div class="topbar-title"><h1>Copiloto de Obra</h1><span>Gestão inteligente em tempo real</span></div></div>
-    <div class="topbar-center"><div class="search-box"><input type="text" placeholder="Buscar obra, material, evento..."><span class="shortcut">⌘K</span></div></div>
-    <div class="topbar-right"><span class="live-clock" id="liveClock"></span><div class="live-indicator"><span class="pulse-dot"></span>Ao Vivo</div><span class="chip">3 Obras Ativas</span><button class="bell-btn" id="bellBtn">🔔</button><div class="avatar">CM</div></div>
+    <div class="topbar-right"><span class="live-clock" id="liveClock"></span><div class="live-indicator"><span class="pulse-dot"></span>Ao Vivo</div><div class="avatar">CM</div></div>
   </header>
 
   <main class="main-content">
-    <section id="section-dashboard" class="page-section active">
-      <div class="alert-banner"><p>🔴 <strong>CRÍTICO</strong> — Obra 2: Cimento esgotado no Bloco B. Impacto: 2 dias de atraso.</p><span>há 23 min</span></div>
-      <div class="feed-section"><div class="feed-header"><div class="feed-header-left"><h2>💬 Feed Inteligente</h2><p>IA monitorando grupos · 47 mensagens hoje</p></div><div class="feed-header-right"><div class="filter-chips"><button class="filter-chip active" data-filter="todos">Todos</button><button class="filter-chip" data-filter="critico">Críticos</button></div><div class="live-badge"><span class="pulse-dot"></span>Ao vivo</div></div></div>
-      <div class="feed-list"><div class="feed-item" data-urgency="critico"><div class="feed-bar red"></div><div class="feed-content"><div class="feed-meta"><span class="group-name">Obra 2 — Galpão Industrial</span><span class="time">14:23</span></div><div class="feed-sender">João Silva (Mestre)</div><div class="feed-message">"acabou o cimento no bloco B, precisa 50 sacos urgente"</div><div class="feed-classification"><span class="ia-chip red">🧱 Falta de Material</span><span class="urgency-badge critico">CRÍTICO</span></div><div class="feed-summary">Material crítico esgotado. Ação imediata necessária.</div></div><div class="feed-action"><a href="#">Ver obra →</a></div></div></div></div>
-      <div class="ai-summary"><div class="ai-summary-left"><div class="ai-summary-header"><h3>🤖 Resumo Diário — IA</h3><span>24 Abr 2026</span></div><div class="ai-summary-text" id="aiSummaryText"></div></div><div class="ai-summary-right"><div class="stats-grid"><div class="stat-item"><div class="value">47</div><div class="label">total msgs</div></div><div class="stat-item"><div class="value">2</div><div class="label">críticos</div></div></div><div class="ai-summary-buttons"><button class="btn btn-primary" id="regenerateBtn">🔄 Gerar</button></div></div></div>
-      <div class="kpi-grid"><div class="kpi-card blue"><div class="kpi-header"><span>Obras Ativas</span><div class="kpi-icon blue">🏗️</div></div><div class="kpi-value" data-target="3">0</div></div><div class="kpi-card red"><div class="kpi-header"><span>Alertas Críticos</span><div class="kpi-icon red">🚨</div></div><div class="kpi-value" data-target="2">0</div></div></div>
-      <div class="main-grid"><div class="obras-list"><div class="obra-card red" data-obra="2"><div class="obra-header" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80')"><div class="obra-header-content"><h3>Galpão Industrial Norte</h3><span class="status-badge red">Alerta Crítico</span></div></div><div class="obra-body"><p class="obra-engineer">Eng. Paula Santos</p><div class="obra-meta"><div><div>Início</div><div>Jan 2026</div></div><div><div>Previsão</div><div>Set 2026</div></div><div><div>Orçamento</div><div>R$ 5.1M</div></div></div><div class="obra-progress"><div class="progress-bar-container"><div class="progress-bar"><div class="progress-fill red" style="width: 41%"></div></div></div><div class="circular-progress" style="background: conic-gradient(var(--red) 0% 41%, var(--border) 41% 100%)">41%</div></div><div class="obra-warning">⚠️ Cimento esgotado · Andaime setor C interditado</div></div></div></div><div class="side-panel"><div class="panel-card"><h3>🌤️ Previsão</h3><div class="weather-grid"><div class="weather-item">☀️ 28°C</div><div class="weather-item">⛅ 26°C</div><div class="weather-item">🌧️ 22°C</div></div></div><div class="panel-card"><h3>📦 Entregas</h3><div class="deliveries-list"><div class="delivery-item"><div>🧱 Cimento - Obra 2</div><div>Hoje 16h</div></div></div></div></div></div>
-      <div class="map-section"><div class="map-header"><h3>Mapa de Obras - Região Sul</h3><p>Santa Catarina</p></div><div id="dashboardMap" style="width:100%;height:320px;border-radius:12px;overflow:hidden;border:1px solid #1a2540;"></div><div class="map-footer"><span>Obras em Jacinto Machado, Criciúma e Araranguá</span></div></div>
-    </section>
-
-    <section id="section-relatorios" class="page-section"><div class="reports-header"><h2>Relatórios</h2><button class="btn btn-primary">Gerar com IA</button></div><div class="reports-grid"><div class="report-card"><div><h4>Relatório Obra 1</h4><span>68% concluído</span></div><span class="report-badge ia">Gerado IA</span><div class="report-buttons"><button class="btn btn-primary btn-sm">Baixar</button></div></div></div></section>
-
-    <section id="section-alertas" class="page-section"><div class="reports-header"><h2>Central de Alertas</h2></div><div class="alerts-list"><div class="obra-card red" style="padding:16px"><div>🔴 Cimento esgotado - Obra 2</div><button class="btn btn-success btn-sm" onclick="resolveAlert(this)">Resolver</button></div></div></section>
-
-    <section id="section-equipe" class="page-section"><div class="team-header"><h2>Equipe</h2><button class="btn btn-primary">+ Membro</button></div><div class="team-grid"><div class="member-card"><div class="member-avatar blue">CM</div><div>Eng. Carlos</div><div>Obra 1</div></div></div></section>
-
-    <section id="section-arquivos" class="page-section">
-      <div class="files-header"><h2>Arquivos e Documentos</h2><p>Plantas, orçamentos, contratos</p></div>
-      <div class="files-top"><div class="file-filters"><button class="file-filter active" data-file-filter="todos">Todos</button><button class="file-filter" data-file-filter="planta">Plantas</button><button class="file-filter" data-file-filter="orcamento">Orçamentos</button></div><button class="btn btn-primary">+ Upload</button></div>
-      <div class="upload-zone" id="uploadZone"><div class="icon">📤</div><h4>Arraste arquivos</h4><button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">Selecionar</button><input type="file" id="fileInput" multiple style="display:none"></div>
-      <div class="files-grid" id="filesGrid">
-        <div class="file-card" data-file-type="planta"><div class="file-card-top"><span class="file-icon">📐</span><span class="file-type planta">Planta</span></div><div class="file-name">Planta Baixa.dwg</div><div class="file-meta"><span>Obra 1</span><span>2.4 MB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div></div>
-        <div class="file-card" data-file-type="orcamento"><div class="file-card-top"><span class="file-icon">💰</span><span class="file-type orcamento">Orçamento</span></div><div class="file-name">Orçamento Revisado.xlsx</div><div class="file-meta"><span>Obra 2</span><span>1.1 MB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div></div>
-        <div class="file-card" data-file-type="contrato"><div class="file-card-top"><span class="file-icon">📄</span><span class="file-type contrato">Contrato</span></div><div class="file-name">Contrato Elétrica.pdf</div><div class="file-meta"><span>Obra 2</span><span>890 KB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div></div>
+    <section id="section-dashboard" class="dashboard-section active">
+      <div class="alert-banner"><p>🔴 <strong>CRÍTICO</strong> — Obra 2: Cimento esgotado. Impacto: 2 dias de atraso.</p><span>há 23 min</span></div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div>Obras Ativas</div><div class="kpi-value">3</div></div>
+        <div class="kpi-card"><div>Alertas Críticos</div><div class="kpi-value danger">2</div></div>
+        <div class="kpi-card"><div>Materiais Baixos</div><div class="kpi-value" style="color:#f97316;">5</div></div>
+        <div class="kpi-card"><div>Progresso Médio</div><div class="kpi-value">64%</div></div>
       </div>
+      <div class="obra-card red"><h3>🏗️ Galpão Industrial Norte</h3><p>Eng. Paula Santos</p><div class="progress-bar"><div class="progress-fill red" style="width:41%"></div></div><div>41% concluído · ⚠️ Cimento esgotado</div></div>
+      <div class="obra-card"><h3>🏢 Condomínio Atlântico</h3><p>Eng. Carlos Mendes</p><div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div><div>68% concluído · ✅ No prazo</div></div>
+      <div class="obra-card"><h3>🏘️ Residencial Vila Nova</h3><p>Eng. Ricardo Lima</p><div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div><div>85% concluído · ✅ Adiantada</div></div>
+      <div class="map-section"><div class="map-header"><h3>Mapa de Obras</h3></div><div id="dashboardMap" style="width:100%;height:320px;"></div></div>
     </section>
 
-    <section id="section-mapa" class="page-section">
-      <div class="map-full-section">
-        <div class="map-full-header">
-          <h2>🗺️ Mapa de Obras - Santa Catarina</h2>
-        </div>
-        <div class="map-legend">
-          <div class="legend-item"><span class="legend-dot blue"></span><span>Obra 1 - Condomínio Atlântico (Jacinto Machado)</span></div>
-          <div class="legend-item"><span class="legend-dot orange"></span><span>Obra 2 - Galpão Industrial Norte (Criciúma)</span></div>
-          <div class="legend-item"><span class="legend-dot green"></span><span>Obra 3 - Residencial Vila Nova (Araranguá)</span></div>
-        </div>
-        <div id="fullMap" style="width:100%;height:450px;border-radius:16px;overflow:hidden;border:1px solid #1a2540;"></div>
-        <div class="map-stats">
-          <div class="map-stat"><div class="value">3</div><div class="label">Obras ativas</div></div>
-          <div class="map-stat"><div class="value">3</div><div class="label">Municípios</div></div>
-          <div class="map-stat"><div class="value">R$ 10.7M</div><div class="label">Investimento total</div></div>
-        </div>
-      </div>
+    <section id="section-alertas" class="dashboard-section" style="display:none;">
+      <div class="obra-card red"><h3>🔴 Cimento esgotado - Obra 2</h3><button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="this.parentElement.remove()">Resolver</button></div>
     </section>
-
-    <section id="section-configuracoes" class="page-section"><div class="reports-header"><h2>Configurações</h2></div><div class="settings-card"><h3>Notificações</h3><div class="setting-item"><span>Alertas WhatsApp</span><div class="toggle on"></div></div></div></section>
   </main>
 </div>
 
-<a href="https://wa.me/5548984829654?text=Quero%20testar%20o%20Copiloto.Obra%20por%2030%20dias%20grátis" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp" style="font-size: 28px; color: white;"></i></a>
+<a href="https://wa.me/5548984829654?text=Quero%20testar%20o%20Copiloto.Obra%20por%2030%20dias%20grátis" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp" style="font-size:28px;color:white;"></i></a>
 
 <script>
-  // IA Analysis Data
-  const iaAnalysisData = {
-    orcamento: {
-      title: "Análise de Orçamento",
-      subtitle: "Comparando com preços de mercado",
-      steps: ["Lendo planilha de custos...", "Comparando preços com índice regional...", "Identificando desvios...", "Gerando recomendações..."],
-      blocks: [{type:"success",headerColor:"green",icon:"✅",label:"CONCRETO",text:"Preço dentro do esperado."},{type:"warning",headerColor:"orange",icon:"⚠️",label:"CIMENTO",text:"R$42/saco vs R$38 mercado.",highlight:"💰 Economia potencial: R$800"}]
-    },
-    planta: {
-      title: "Análise de Planta",
-      subtitle: "Verificando conformidade",
-      steps: ["Processando arquivo...", "Identificando áreas...", "Verificando NBR..."],
-      blocks: [{type:"success",headerColor:"green",icon:"📐",label:"DADOS",text:"Área total: 1.240m²"},{type:"danger",headerColor:"red",icon:"⚠️",label:"NBR 9050",text:"Escada com largura 0,90m. Mínimo 1,20m."}]
-    },
-    contrato: {
-      title: "Análise Contratual",
-      subtitle: "Verificando cláusulas",
-      steps: ["Lendo PDF...", "Analisando riscos..."],
-      blocks: [{type:"warning",headerColor:"orange",icon:"⚠️",label:"MULTA",text:"0,5% ao dia sobre valor total."}]
-    }
-  };
-
-  function analyzeFile(btn) {
-    const card = btn.closest('.file-card');
-    const fileName = card.querySelector('.file-name').textContent;
-    let fileType = 'contrato';
-    const typeElem = card.querySelector('.file-type');
-    if(typeElem) {
-      if(typeElem.classList.contains('orcamento')) fileType = 'orcamento';
-      else if(typeElem.classList.contains('planta')) fileType = 'planta';
-    }
-    const data = iaAnalysisData[fileType] || iaAnalysisData.contrato;
-    document.getElementById('ia-panel-title').textContent = '🤖 ' + data.title;
-    document.getElementById('ia-panel-subtitle').textContent = fileName;
-    document.getElementById('ia-status-text').textContent = 'Iniciando análise...';
-    document.getElementById('ia-panel-content').innerHTML = '';
-    document.getElementById('ia-panel-overlay').style.display = 'block';
-    document.getElementById('ia-panel').style.right = '0';
-    let stepIndex = 0;
-    const content = document.getElementById('ia-panel-content');
-    const statusText = document.getElementById('ia-status-text');
-    const interval = setInterval(() => {
-      if(stepIndex < data.steps.length) {
-        statusText.textContent = data.steps[stepIndex];
-        const line = document.createElement('div');
-        line.className = 'ia-typing-line';
-        line.innerHTML = `<span>⟳</span><span>${data.steps[stepIndex]}</span>`;
-        content.appendChild(line);
-        content.scrollTop = content.scrollHeight;
-        stepIndex++;
-      } else {
-        clearInterval(interval);
-        statusText.textContent = 'Análise concluída';
-        document.getElementById('ia-status-dot').style.background = '#22c55e';
-        content.innerHTML = '';
-        data.blocks.forEach((block, i) => {
-          setTimeout(() => {
-            const div = document.createElement('div');
-            div.className = `ia-result-block ${block.type}`;
-            let html = `<div class="ia-block-header ${block.headerColor}">${block.icon} ${block.label}</div><div class="ia-block-text">${block.text}</div>`;
-            if(block.highlight) html += `<div class="ia-economy-highlight">${block.highlight}</div>`;
-            div.innerHTML = html;
-            content.appendChild(div);
-            content.scrollTop = content.scrollHeight;
-          }, i * 200);
-        });
-      }
-    }, 500);
-  }
-
-  function closeIAPanel() {
-    document.getElementById('ia-panel').style.right = '-480px';
-    document.getElementById('ia-panel-overlay').style.display = 'none';
-  }
-
-  // Live Clock
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('liveClock').textContent = now.toLocaleString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // Navigation
-  document.querySelectorAll('[data-section]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-      document.getElementById('section-' + btn.dataset.section).classList.add('active');
-      document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if(btn.dataset.section === 'mapa') {
-        setTimeout(() => {
-          if(window.fullMap) {
-            window.fullMap.invalidateSize();
-          } else {
-            initFullMap();
-          }
-        }, 100);
-      }
-    });
-  });
-
-  // KPI Counter Animation
-  document.querySelectorAll('.kpi-value[data-target]').forEach(el => {
-    let target = parseInt(el.dataset.target);
-    let current = 0;
-    let increment = target / 30;
-    let timer = setInterval(() => {
-      current += increment;
-      if(current >= target) { current = target; clearInterval(timer); }
-      el.textContent = Math.floor(current);
-    }, 50);
-  });
-
-  // AI Summary Typewriter
-  const summaryText = "3 obras monitoradas. 47 mensagens nos grupos. 2 alertas críticos: falta de cimento na Obra 2 e risco no andaime. Ação prioritária: resolver cimento hoje.";
-  let i = 0;
-  function typeWriter() {
-    const el = document.getElementById('aiSummaryText');
-    if(i < summaryText.length) {
-      el.textContent += summaryText.charAt(i);
-      i++;
-      setTimeout(typeWriter, 30);
-    }
-  }
-  typeWriter();
-  document.getElementById('regenerateBtn')?.addEventListener('click', () => { i = 0; document.getElementById('aiSummaryText').textContent = ''; typeWriter(); });
-
-  // File upload handling
-  const uploadZone = document.getElementById('uploadZone');
-  const fileInput = document.getElementById('fileInput');
-  const filesGrid = document.getElementById('filesGrid');
-  function handleFiles(files) {
-    Array.from(files).forEach(file => {
-      let type = 'contrato', icon = '📄';
-      const ext = file.name.split('.').pop().toLowerCase();
-      if(['dwg'].includes(ext)) { type = 'planta'; icon = '📐'; }
-      else if(['xls','xlsx'].includes(ext)) { type = 'orcamento'; icon = '💰'; }
-      const card = document.createElement('div');
-      card.className = 'file-card';
-      card.dataset.fileType = type;
-      card.innerHTML = `<div class="file-card-top"><span class="file-icon">${icon}</span><span class="file-type ${type}">${type.charAt(0).toUpperCase()+type.slice(1)}</span></div><div class="file-name">${file.name}</div><div class="file-meta"><span>Novo</span><span>${(file.size/1024/1024).toFixed(1)} MB</span></div><div class="file-actions"><button class="btn-ia btn-sm" onclick="analyzeFile(this)">🤖 Analisar</button><button class="btn btn-ghost btn-sm">Baixar</button><button class="btn btn-danger btn-sm">Remover</button></div>`;
-      filesGrid.insertBefore(card, filesGrid.firstChild);
-    });
-  }
-  uploadZone?.addEventListener('click', () => fileInput?.click());
-  fileInput?.addEventListener('change', e => handleFiles(e.target.files));
-  uploadZone?.addEventListener('dragover', e => e.preventDefault());
-  uploadZone?.addEventListener('drop', e => { e.preventDefault(); handleFiles(e.dataTransfer.files); });
-
-  window.resolveAlert = function(btn) { btn.closest('.obra-card')?.remove(); };
-
-  // Leaflet Map Configuration
-  function makeIcon(color) {
-    return L.divIcon({
-      html: `<div style="width:32px;height:32px;background:${color};border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 0 12px ${color}88;"></div>`,
-      iconSize: [32, 32],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
-    });
-  }
-
-  const obrasMap = [
-    { lat: -28.9954, lng: -49.7625, color: '#3b82f6', name: 'Obra 1 - Condomínio Atlântico', cidade: 'Jacinto Machado, SC', status: 'No Prazo', progresso: '68%', eng: 'Eng. Carlos Mendes' },
-    { lat: -28.6802, lng: -49.3700, color: '#ef4444', name: 'Obra 2 - Galpão Industrial Norte', cidade: 'Criciúma, SC', status: 'Em Risco', progresso: '41%', eng: 'Eng. Paula Rocha' },
-    { lat: -28.9350, lng: -49.4870, color: '#22c55e', name: 'Obra 3 - Residencial Vila Nova', cidade: 'Araranguá, SC', status: 'Adiantada', progresso: '85%', eng: 'Eng. Ricardo Lima' }
-  ];
-
-  function createPopupContent(obra) {
-    return `<div style="background:#111827;border:1px solid #1a2540;border-radius:12px;padding:16px;min-width:200px;"><div style="font-weight:700;margin-bottom:6px;">${obra.name}</div><div style="color:#94a3b8;font-size:12px;margin-bottom:10px;">${obra.cidade}</div><div><div>Status: ${obra.status}</div><div>Progresso: <span style="color:${obra.color}">${obra.progresso}</span></div><div>Eng: ${obra.eng}</div></div></div>`;
-  }
-
-  function initDashboardMap() {
-    const map = L.map('dashboardMap').setView([-28.8, -49.5], 8);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(map);
-    obrasMap.forEach(obra => {
-      L.marker([obra.lat, obra.lng], { icon: makeIcon(obra.color) }).addTo(map).bindPopup(createPopupContent(obra));
-    });
-    return map;
-  }
-
-  function initFullMap() {
-    if(window.fullMap) return window.fullMap;
-    const map = L.map('fullMap').setView([-28.8, -49.5], 9);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(map);
-    obrasMap.forEach(obra => {
-      L.marker([obra.lat, obra.lng], { icon: makeIcon(obra.color) }).addTo(map).bindPopup(createPopupContent(obra));
-    });
-    window.fullMap = map;
-    return map;
-  }
-
-  // Initialize dashboard map
-  initDashboardMap();
-  // Initialize full map when needed (lazy load)
-  window.initFullMap = initFullMap;
-
-  // Style for leaflet popups
-  const style = document.createElement('style');
-  style.textContent = `.leaflet-popup-content-wrapper { background: transparent !important; box-shadow: none !important; } .leaflet-popup-tip { background: #111827 !important; }`;
-  document.head.appendChild(style);
-
   function showDashboard() {
     document.getElementById('landing-page').style.display = 'none';
     document.getElementById('dashboard-app').style.display = 'block';
-    document.querySelector('.whatsapp-btn').style.display = 'flex';
-    document.getElementById('landing-tab')?.classList.remove('active');
-    document.getElementById('dashboard-tab')?.classList.add('active');
-    setTimeout(() => {
-      if (typeof initFullMap === 'function') initFullMap();
-    }, 100);
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-btn')[1]?.classList.add('active');
+    setTimeout(() => { if (typeof initDashboardMap === 'function') initDashboardMap(); }, 100);
   }
 
   function showLanding() {
     document.getElementById('landing-page').style.display = 'block';
     document.getElementById('dashboard-app').style.display = 'none';
-    document.querySelector('.whatsapp-btn').style.display = 'flex';
-    document.getElementById('dashboard-tab')?.classList.remove('active');
-    document.getElementById('landing-tab')?.classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-btn')[0]?.classList.add('active');
   }
 
   function updateClock() {
@@ -595,6 +285,26 @@
   }
   setInterval(updateClock, 1000);
   updateClock();
+
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('section-' + btn.dataset.section).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (btn.dataset.section === 'dashboard') setTimeout(() => { if (typeof initDashboardMap === 'function') initDashboardMap(); }, 100);
+    });
+  });
+
+  function initDashboardMap() {
+    if (window.dashboardMap) { window.dashboardMap.invalidateSize(); return; }
+    const map = L.map('dashboardMap').setView([-28.8, -49.5], 8);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+    L.marker([-28.9954, -49.7625]).bindPopup('Obra 1 - Condomínio Atlântico').addTo(map);
+    L.marker([-28.6802, -49.3700]).bindPopup('Obra 2 - Galpão Industrial Norte').addTo(map);
+    L.marker([-28.9350, -49.4870]).bindPopup('Obra 3 - Residencial Vila Nova').addTo(map);
+    window.dashboardMap = map;
+  }
 </script>
 </body>
 </html>

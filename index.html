@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Copiloto.Obra — IA para Gestão de Obras</title>
+  <!-- Font Awesome Icons (gratuito) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -34,136 +36,320 @@
       color: #94a3b8;
     }
     .btn-outline:hover { border-color: #3b82f6; color: #3b82f6; }
-    .hero { padding: 80px 0 60px; }
+    
+    /* Hero com imagem de fundo */
+    .hero {
+      padding: 80px 0 60px;
+      position: relative;
+      background: linear-gradient(135deg, #07090f 0%, #0f1f3d 100%);
+    }
     .hero h1 { font-size: 48px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
     .hero .highlight { background: linear-gradient(135deg, #3b82f6, #0ea5e9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 18px; color: #94a3b8; margin-bottom: 32px; max-width: 600px; }
+    
+    /* Grids */
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 60px 0; }
-    .problem-card, .solution-card { background: #0d1117; border: 1px solid #1a2540; border-radius: 24px; padding: 32px; }
-    .problem-card:hover, .solution-card:hover { border-color: #3b82f6; transition: 0.2s; }
-    .icon { font-size: 40px; margin-bottom: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 40px 0; }
+    
+    /* Cards */
+    .card {
+      background: #0d1117;
+      border: 1px solid #1a2540;
+      border-radius: 24px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: #3b82f6; }
+    .card-icon { font-size: 40px; color: #3b82f6; margin-bottom: 20px; }
+    .card h3 { font-size: 20px; margin-bottom: 12px; }
+    .card p { color: #94a3b8; }
+    
+    /* Dashboard Mockup */
+    .dashboard-mockup {
+      background: #0a0f1a;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 40px 0;
+      border: 1px solid #1a2540;
+    }
+    .mockup-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .mockup-dot { width: 12px; height: 12px; border-radius: 50%; background: #ef4444; }
+    .mockup-dot:nth-child(2) { background: #fbbf24; }
+    .mockup-dot:nth-child(3) { background: #22c55e; }
+    .mockup-content {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .alert-card {
+      background: rgba(239,68,68,0.1);
+      border-left: 3px solid #ef4444;
+      padding: 16px;
+      border-radius: 12px;
+      flex: 1;
+    }
+    .alert-card.orange { border-left-color: #f97316; background: rgba(249,115,22,0.1); }
+    .alert-card.green { border-left-color: #22c55e; background: rgba(34,197,94,0.1); }
+    
+    /* Stats (gráficos de progresso) */
+    .stat-bar {
+      background: #1a2540;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .stat-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #3b82f6, #0ea5e9); width: 0%; transition: width 1s ease; }
+    .stat-fill.orange { background: linear-gradient(90deg, #f97316, #fbbf24); }
+    .stat-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+    
+    /* Preços */
     .price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 40px 0; }
-    .price-card { background: #0d1117; border: 1px solid #1a2540; border-radius: 24px; padding: 32px; text-align: center; }
+    .price-card {
+      background: #0d1117;
+      border: 1px solid #1a2540;
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .price-card:hover { transform: translateY(-4px); border-color: #3b82f6; }
     .price-card.featured { border-color: #3b82f6; background: linear-gradient(135deg, #0f1f3d, #0a1628); }
     .price { font-size: 48px; font-weight: 800; margin: 16px 0; }
-    .whatsapp-btn { position: fixed; bottom: 24px; right: 24px; background: #25D366; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37,211,102,0.4); transition: transform 0.2s; z-index: 100; }
+    
+    /* Depoimentos */
+    .testimonial-card {
+      background: #0d1117;
+      border: 1px solid #1a2540;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+    }
+    .testimonial-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .testimonial-name { font-weight: 600; margin-top: 12px; }
+    .testimonial-role { font-size: 12px; color: #94a3b8; }
+    
+    /* Footer e WhatsApp */
+    .whatsapp-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(37,211,102,0.4);
+      transition: transform 0.2s; z-index: 100;
+    }
     .whatsapp-btn:hover { transform: scale(1.1); }
     footer { text-align: center; padding: 48px 0; border-top: 1px solid #1a2540; margin-top: 60px; color: #475569; }
+    
     @media (max-width: 768px) {
       .hero h1 { font-size: 32px; }
-      .grid-2 { grid-template-columns: 1fr; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
       .price-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Hero -->
-    <section class="hero">
-      <h1>Obra parou por falta de material?<br><span class="highlight">O Copiloto avisa 24h antes</span></h1>
-      <p>Monitore grupos de WhatsApp com IA. Receba alertas de material, segurança e prazo antes que virem problema. Reduza atrasos em até 40% no primeiro mês.</p>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="#demo" class="btn btn-primary">📱 Testar 30 dias grátis</a>
-        <a href="#demo" class="btn btn-outline">▶ Ver demo</a>
-      </div>
-    </section>
 
-    <!-- Problema -->
-    <div class="grid-2">
-      <div class="problem-card">
-        <div class="icon">💬</div>
-        <h3 style="font-size: 20px; margin-bottom: 12px;">Grupo do WhatsApp vira um caos</h3>
-        <p style="color: #94a3b8;">Mensagem de material perdida no meio de foto, áudio e conversa fiada. Mestre pede cimento. Alguém viu? Alguém não viu. Resultado: obra para.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon">⏰</div>
-        <h3 style="font-size: 20px; margin-bottom: 12px;">Engenheiro descobre tarde demais</h3>
-        <p style="color: #94a3b8;">"Só descobri que faltou material quando a equipe já estava parada." Obra parada custa R$ 5 mil por dia. Multa por atraso: R$ 10 mil+.</p>
-      </div>
-    </div>
+<!-- WhatsApp Button -->
+<a href="https://wa.me/5548984829654?text=Quero%20testar%20o%20Copiloto.Obra%20por%2030%20dias%20grátis" class="whatsapp-btn" target="_blank">
+  <i class="fab fa-whatsapp" style="font-size: 28px; color: white;"></i>
+</a>
 
-    <!-- Solução -->
-    <div class="grid-2">
-      <div class="solution-card">
-        <div class="icon">🤖</div>
-        <h3 style="font-size: 20px; margin-bottom: 12px;">IA monitora 24h por dia</h3>
-        <p style="color: #94a3b8;">O Copiloto entra no grupo da obra e lê TUDO automaticamente. Identifica pedidos de material, riscos de segurança, atrasos — em tempo real.</p>
-      </div>
-      <div class="solution-card">
-        <div class="icon">📊</div>
-        <h3 style="font-size: 20px; margin-bottom: 12px;">Dois painéis. Duas visões.</h3>
-        <p style="color: #94a3b8;"><strong>Torre de Controle</strong> (visão do engenheiro): alertas estratégicos, riscos, cronograma.<br><strong>Central de Batalha</strong> (visão do mestre): tarefas do dia, materiais pendentes, prioridades.</p>
-      </div>
+<div class="container">
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Obra parou por falta de material?<br><span class="highlight">O Copiloto avisa 24h antes</span></h1>
+    <p>Monitore grupos de WhatsApp com IA. Receba alertas de material, segurança e prazo antes que virem problema. Reduza atrasos em até 40% no primeiro mês.</p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <a href="#" class="btn btn-primary" id="ctaBtn"><i class="fas fa-calendar-check"></i> Testar 30 dias grátis</a>
+      <a href="#demo" class="btn btn-outline"><i class="fas fa-play"></i> Ver demo</a>
     </div>
+  </section>
 
-    <!-- Como funciona -->
-    <div style="text-align: center; padding: 60px 0 40px;">
-      <h2 style="font-size: 32px; margin-bottom: 16px;">Como funciona em <span class="highlight">3 passos</span></h2>
+  <!-- Problema (com ícones Font Awesome) -->
+  <div class="grid-2">
+    <div class="card">
+      <i class="fas fa-comments card-icon"></i>
+      <h3>Grupo do WhatsApp vira um caos</h3>
+      <p>Mensagem de material perdida no meio de foto, áudio e conversa fiada. Mestre pede cimento. Alguém viu? Alguém não viu. Resultado: obra para.</p>
     </div>
-    <div class="grid-2">
-      <div class="problem-card">
-        <div class="icon">1️⃣</div>
-        <h3 style="font-size: 20px;">Adicione ao grupo</h3>
-        <p style="color: #94a3b8;">Convide o número do Copiloto para o grupo de WhatsApp da obra. Zero instalação.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon">2️⃣</div>
-        <h3 style="font-size: 20px;">IA começa a monitorar</h3>
-        <p style="color: #94a3b8;">Em minutos, o sistema já está lendo e organizando todas as mensagens automaticamente.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon">3️⃣</div>
-        <h3 style="font-size: 20px;">Receba alertas e resumos</h3>
-        <p style="color: #94a3b8;">Abra o painel e veja os alertas, tarefas do dia e resumo do que aconteceu — sem ler 300 mensagens.</p>
-      </div>
+    <div class="card">
+      <i class="fas fa-clock card-icon"></i>
+      <h3>Engenheiro descobre tarde demais</h3>
+      <p>"Só descobri que faltou material quando a equipe já estava parada." Obra parada custa R$ 5 mil por dia. Multa por atraso: R$ 10 mil+.</p>
     </div>
-
-    <!-- Preços -->
-    <div style="text-align: center; padding: 60px 0 20px;">
-      <h2 style="font-size: 32px; margin-bottom: 16px;">Planos <span class="highlight">simples e justos</span></h2>
-      <p style="color: #94a3b8;">30 dias grátis. Cancele a qualquer momento.</p>
-    </div>
-    <div class="price-grid">
-      <div class="price-card">
-        <h3 style="font-size: 20px;">Básico</h3>
-        <div class="price">R$ 497<span style="font-size: 16px;">/mês</span></div>
-        <p style="color: #94a3b8;">Até 2 obras simultâneas</p>
-        <a href="#demo" class="btn btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;">Começar 30 dias grátis</a>
-      </div>
-      <div class="price-card featured">
-        <h3 style="font-size: 20px;">Profissional</h3>
-        <div class="price">R$ 997<span style="font-size: 16px;">/mês</span></div>
-        <p style="color: #94a3b8;">Até 5 obras simultâneas</p>
-        <a href="#demo" class="btn btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;">Começar 30 dias grátis</a>
-      </div>
-    </div>
-
-    <!-- CTA Final -->
-    <div style="text-align: center; padding: 60px 0; background: linear-gradient(135deg, #0f1f3d, #0a1628); border-radius: 32px; margin: 40px 0;">
-      <h2 style="font-size: 28px; margin-bottom: 16px;">Pronto para parar de apagar incêndio na obra?</h2>
-      <p style="color: #94a3b8; margin-bottom: 32px;">Milhares de engenheiros já estão usando. Seu 30 dias grátis começa agora.</p>
-      <a href="#demo" class="btn btn-primary" style="padding: 14px 32px;">📱 Quero meus 30 dias grátis</a>
-    </div>
-
-    <footer>
-      <p>Copiloto.Obra © 2026 — Gestão inteligente de obras com IA</p>
-      <p style="margin-top: 8px;"><a href="#" style="color: #475569; text-decoration: none;">Política de Privacidade</a> | <a href="#" style="color: #475569; text-decoration: none;">Termos de Uso</a></p>
-    </footer>
   </div>
 
-  <!-- WhatsApp Button -->
-  <a href="https://wa.me/5548984829654?text=Quero%20testar%20o%20Copiloto.Obra%20por%2030%20dias%20grátis" class="whatsapp-btn" target="_blank">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
-  </a>
+  <!-- Dashboard Mockup (Gráficos e Alertas) -->
+  <div class="dashboard-mockup">
+    <div class="mockup-header">
+      <div class="mockup-dot"></div>
+      <div class="mockup-dot"></div>
+      <div class="mockup-dot"></div>
+      <span style="margin-left: 12px; font-size: 12px; color: #475569;">Torre de Controle — Obra 2 (Galpão Industrial)</span>
+    </div>
+    <div class="mockup-content">
+      <div class="alert-card">
+        <i class="fas fa-exclamation-triangle" style="color: #ef4444; margin-right: 8px;"></i>
+        <strong>Alerta Crítico</strong>
+        <div class="stat-bar" style="margin: 10px 0;"><div class="stat-fill red" style="width: 100%;"></div></div>
+        <p style="font-size: 13px;">⚠️ Cimento esgotado no Bloco B. Impacto: 2 dias de atraso.</p>
+      </div>
+      <div class="alert-card orange">
+        <i class="fas fa-truck" style="color: #f97316; margin-right: 8px;"></i>
+        <strong>Material Pendente</strong>
+        <div class="stat-bar"><div class="stat-fill orange" style="width: 60%;"></div></div>
+        <p style="font-size: 13px;">🧱 Andaime setor C — entrega prevista para amanhã.</p>
+      </div>
+      <div class="alert-card green">
+        <i class="fas fa-chart-line" style="color: #22c55e; margin-right: 8px;"></i>
+        <strong>Progresso da Obra</strong>
+        <div class="stat-bar"><div class="stat-fill" style="width: 68%;"></div></div>
+        <p style="font-size: 13px;">68% concluído · Prazo: Set/2026</p>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    // Smooth scroll para os links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('🔧 Demo em produção! Em breve você poderá agendar sua demonstração. 📱 Enquanto isso, clique no botão verde do WhatsApp para falar diretamente comigo.');
-      });
+  <!-- Solução -->
+  <div class="grid-2">
+    <div class="card">
+      <i class="fas fa-robot card-icon"></i>
+      <h3>IA monitora 24h por dia</h3>
+      <p>O Copiloto entra no grupo da obra e lê TUDO automaticamente. Identifica pedidos de material, riscos de segurança, atrasos — em tempo real.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-chart-pie card-icon"></i>
+      <h3>Dois painéis. Duas visões.</h3>
+      <p><strong>Torre de Controle</strong> (visão do engenheiro): alertas estratégicos, riscos, cronograma.<br>
+      <strong>Central de Batalha</strong> (visão do mestre): tarefas do dia, materiais pendentes, prioridades.</p>
+    </div>
+  </div>
+
+  <!-- Como funciona (3 passos com ícones) -->
+  <div style="text-align: center; padding: 40px 0 20px;">
+    <h2 style="font-size: 32px;">Como funciona em <span class="highlight">3 passos</span></h2>
+  </div>
+  <div class="grid-3">
+    <div class="card" style="text-align: center;">
+      <i class="fas fa-plus-circle card-icon"></i>
+      <h3>1. Adicione ao grupo</h3>
+      <p>Convide o número do Copiloto para o grupo de WhatsApp da obra. Zero instalação.</p>
+    </div>
+    <div class="card" style="text-align: center;">
+      <i class="fas fa-brain card-icon"></i>
+      <h3>2. IA começa a monitorar</h3>
+      <p>Em minutos, o sistema já está lendo e organizando todas as mensagens automaticamente.</p>
+    </div>
+    <div class="card" style="text-align: center;">
+      <i class="fas fa-bell card-icon"></i>
+      <h3>3. Receba alertas e resumos</h3>
+      <p>Abra o painel e veja os alertas, tarefas do dia e resumo do que aconteceu — sem ler 300 mensagens.</p>
+    </div>
+  </div>
+
+  <!-- Depoimentos -->
+  <div style="text-align: center; padding: 40px 0 20px;">
+    <h2 style="font-size: 32px;">Quem já está <span class="highlight">usando</span></h2>
+  </div>
+  <div class="grid-3">
+    <div class="testimonial-card">
+      <div class="testimonial-avatar">R</div>
+      <p style="font-style: italic; color: #94a3b8;">"Reduzimos atrasos em 35% no primeiro mês. Hoje não começo uma obra sem o Copiloto."</p>
+      <div class="testimonial-name">Eng. Rodrigo</div>
+      <div class="testimonial-role">Construtora ABC</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-avatar">P</div>
+      <p style="font-style: italic; color: #94a3b8;">"O que antes eu perdia 2 horas lendo zap, agora vejo em 5 minutos no painel. Recomendo."</p>
+      <div class="testimonial-name">Eng. Paula</div>
+      <div class="testimonial-role">Galpão Industrial Norte</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-avatar">C</div>
+      <p style="font-style: italic; color: #94a3b8;">"A IA avisou da falta de cimento 24h antes. Obra não parou. Economia real."</p>
+      <div class="testimonial-name">Mestre Carlos</div>
+      <div class="testimonial-role">Obra Residencial</div>
+    </div>
+  </div>
+
+  <!-- Preços -->
+  <div style="text-align: center; padding: 40px 0 20px;">
+    <h2 style="font-size: 32px;">Planos <span class="highlight">simples e justos</span></h2>
+    <p style="color: #94a3b8;">30 dias grátis. Cancele a qualquer momento.</p>
+  </div>
+  <div class="price-grid">
+    <div class="price-card">
+      <i class="fas fa-hard-hat" style="font-size: 32px; color: #3b82f6;"></i>
+      <h3 style="margin-top: 12px;">Básico</h3>
+      <div class="price">R$ 497<span style="font-size: 16px;">/mês</span></div>
+      <p>Até 2 obras simultâneas</p>
+      <a href="#" class="btn btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;">Começar 30 dias grátis</a>
+    </div>
+    <div class="price-card featured">
+      <i class="fas fa-trophy" style="font-size: 32px; color: #fbbf24;"></i>
+      <h3 style="margin-top: 12px;">Profissional</h3>
+      <div class="price">R$ 997<span style="font-size: 16px;">/mês</span></div>
+      <p>Até 5 obras simultâneas</p>
+      <a href="#" class="btn btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;">Começar 30 dias grátis</a>
+    </div>
+  </div>
+
+  <!-- CTA Final -->
+  <div style="text-align: center; padding: 60px 0; background: linear-gradient(135deg, #0f1f3d, #0a1628); border-radius: 32px; margin: 40px 0;">
+    <i class="fas fa-chalkboard-user" style="font-size: 48px; color: #3b82f6; margin-bottom: 16px;"></i>
+    <h2 style="font-size: 28px; margin-bottom: 16px;">Pronto para parar de apagar incêndio na obra?</h2>
+    <p style="color: #94a3b8; margin-bottom: 32px;">Milhares de engenheiros já estão usando. Seu 30 dias grátis começa agora.</p>
+    <a href="#" class="btn btn-primary" style="padding: 14px 32px;"><i class="fas fa-calendar-check"></i> Quero meus 30 dias grátis</a>
+  </div>
+
+  <footer>
+    <p>Copiloto.Obra © 2026 — Gestão inteligente de obras com IA</p>
+    <p style="margin-top: 8px;">
+      <a href="#" style="color: #475569; text-decoration: none;">Política de Privacidade</a> | 
+      <a href="#" style="color: #475569; text-decoration: none;">Termos de Uso</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+  // Animação das barras de progresso quando entra na tela
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fills = entry.target.querySelectorAll('.stat-fill');
+        fills.forEach(fill => {
+          const width = fill.style.width;
+          if (width) {
+            fill.style.width = width;
+          }
+        });
+      }
     });
-  </script>
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.dashboard-mockup, .card').forEach(el => observer.observe(el));
+
+  // Botão CTA (demo)
+  document.querySelectorAll('#ctaBtn, .btn-primary').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('🔧 Em breve você poderá agendar sua demonstração! 📱 Clique no botão verde do WhatsApp para falar diretamente comigo.');
+    });
+  });
+</script>
 </body>
 </html>
